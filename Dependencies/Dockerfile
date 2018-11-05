@@ -1,7 +1,6 @@
 FROM project8/p8compute_bare as gcc-base
 
 # get gcc from package manager
-##    yum -y --enablerepo=centos-sclo-rh-testing install \
 RUN yum -y install centos-release-scl-rh &&\
     yum -y install \
         devtoolset-7-gcc-c++ \
@@ -14,10 +13,6 @@ RUN yum -y install centos-release-scl-rh &&\
         libXft-devel \
         libXext-devel \
         wget
-#COPY ./scl_enable /usr/local/src/scl_enable
-#ENV BASH_ENV=/usr/local/src/scl_enable \
-#    ENV=/usr/local/src/scl_enable \
-#    PROMPT_COMMAND=". /usr/local/src/scl_enable"
 
 ENV BUILD_PREFIX=/usr/local/p8/common-2018-11-01
 ENV PATH=$BUILD_PREFIX/bin:$PATH
@@ -28,28 +23,6 @@ RUN mkdir -p $BUILD_PREFIX && \
 FROM gcc-base as common
 
 RUN mkdir -p /tmp_install
-
-#COPY ./setup.sh /tmp_install/setup.sh
-#COPY ./dependency_urls.txt /tmp_install/dependency_urls.txt
-#COPY ./download_pkg.sh /tmp_install/download_pkg.sh
-#COPY ./install.sh /tmp_install/install.sh
-#COPY ./run-cvmfs-install.sh /tmp_install/run-cvmfs-install.sh
-#COPY ./cleanup.sh /tmp_install/cleanup.sh
-
-#RUN /bin/true &&\
-#    source /usr/local/src/scl_enable &&\
-    #cd /tmp_install && \
-    ##source /opt/rh/devtoolset-3/enable && \
-    ##scl enable devtoolset-6
-    #/tmp_install/run-cvmfs-install.sh && \
-    #/tmp_install/cleanup.sh && \
-    #rm -rf /tmp_install &&\
-#    /bin/true
-
-#ENV BUILD_PREFIX=/usr/local/p8/common-2018-11-01
-#ENV PATH=$BUILD_PREFIX/bin:$PATH
-#RUN mkdir -p $BUILD_PREFIX && \
-#    ln -s $BUILD_PREFIX $BUILD_PREFIX/../common
 
 ##########################
 FROM common as cmake_done
@@ -77,19 +50,6 @@ RUN source scl_source enable devtoolset-7 &&\
     make -j3 install &&\
     /bin/true
    
-##########################
-#FROM common as python_done
-
-# Python
-#RUN source scl_source enable devtoolset-7 &&\
-#    cd /tmp_install &&\
-#    wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tgz &&\
-#    tar -xvzf Python-3.6.4.tgz &&\
-#    cd Python-3.6.4 &&\
-#    ./configure --enable-shared --prefix=$BUILD_PREFIX &&\
-#    make -j3 install &&\
-#    /bin/true
-
 ##########################
 FROM common as hdf5_done
 

@@ -14,10 +14,18 @@ RUN yum -y install centos-release-scl-rh &&\
         libXext-devel \
         wget
 
-ENV BUILD_PREFIX=/usr/local/p8/common-2018-11-01
-ENV PATH=$BUILD_PREFIX/bin:$PATH
-RUN mkdir -p $BUILD_PREFIX && \
-    ln -s $BUILD_PREFIX $BUILD_PREFIX/../common
+ENV COMMON_BUILD_PREFIX=/usr/local/p8/common-v0.1.0
+
+RUN mkdir -p $COMMON_BUILD_PREFIX &&\
+    cd $COMMON_BUILD_PREFIX &&\
+    echo "source scl_source enable devtoolset-7" > setup.sh &&\
+    echo "source scl_source enable rh-python36" >> setup.sh &&\
+    echo "unset PYTHONPATH" >> setup.sh &&\
+    echo "export COMMON_BUILD_PREFIX=$COMMON_BUILD_PREFIX" >> setup.sh &&\
+    echo 'ln -sf $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX/../common' >> setup.sh &&\
+    echo 'export PATH=$COMMON_BUILD_PREFIX/bin:$PATH' >> setup.sh &&\
+    echo 'export LD_LIBRARY_PATH=$COMMON_BUILD_PREFIX/lib:$COMMON_BUILD_PREFIX/lib/root:$LD_LIBRARY_PATH' >> setup.sh &&\
+    /bin/true
 
 ##########################
 FROM gcc-base as common
@@ -28,25 +36,27 @@ RUN mkdir -p /tmp_install
 FROM common as cmake_done
 
 ## cmake (install manually because the version in yum is too old, v2.8.12)
-RUN source scl_source enable devtoolset-7 &&\
+RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
     wget http://www.cmake.org/files/v3.4/cmake-3.4.3.tar.gz &&\
     tar -xvzf cmake-3.4.3.tar.gz &&\
     cd cmake-3.4.3 &&\
-    ./configure --prefix=$BUILD_PREFIX &&\
+    ./configure --prefix=$COMMON_BUILD_PREFIX &&\
     make -j3 install &&\
     /bin/true
 
 ##########################
 FROM common as git_done
 
+RUN yum install -y libcurl-devel
+
 ## git (install manually because the version in yum is too old)
-RUN source scl_source enable devtoolset-7 &&\
+RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
     wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.9.5.tar.gz &&\
     tar -xvzf git-2.9.5.tar.gz &&\
     cd git-2.9.5 &&\
-    ./configure --prefix=$BUILD_PREFIX &&\
+    ./configure --prefix=$COMMON_BUILD_PREFIX &&\
     make -j3 install &&\
     /bin/true
    
@@ -54,12 +64,12 @@ RUN source scl_source enable devtoolset-7 &&\
 FROM common as hdf5_done
 
 ## hdf5
-RUN source scl_source enable devtoolset-7 &&\
+RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
     wget https://support.hdfgroup.org/ftp/HDF5/prev-releases/hdf5-1.8/hdf5-1.8.18/src/hdf5-1.8.18.tar.gz &&\
     tar -xvzf hdf5-1.8.18.tar.gz &&\
     cd hdf5-1.8.18 &&\
-    ./configure --prefix=$BUILD_PREFIX &&\
+    ./configure --prefix=$COMMON_BUILD_PREFIX --enable-cxx --enable-shared &&\
     make -j3 install &&\
     /bin/true
 
@@ -67,27 +77,27 @@ RUN source scl_source enable devtoolset-7 &&\
 FROM common as fftw3_done
 
 ## fftw3
-RUN source scl_source enable devtoolset-7 &&\
+RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
     wget http://www.fftw.org/fftw-3.3.4.tar.gz &&\
     tar -xvzf fftw-3.3.4.tar.gz &&\
     cd fftw-3.3.4 &&\
-    ./configure --prefix=$BUILD_PREFIX --enable-shared --enable-threads --with-pic &&\
+    ./configure --prefix=$COMMON_BUILD_PREFIX --enable-shared --enable-threads --with-pic &&\
     make -j3 install &&\
     /bin/true
 
 ##########################
 FROM hdf5_done as matio_done
 
-COPY --from=hdf5_done $BUILD_PREFIX $BUILD_PREFIX
+COPY --from=hdf5_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 
 ## matio
-RUN source scl_source enable devtoolset-7 &&\
+RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
     wget http://sourceforge.net/projects/matio/files/matio/1.5.2/matio-1.5.2.tar.gz &&\
     tar -xvzf matio-1.5.2.tar.gz &&\
-    cd hdf5-1.8.18 &&\
-    ./configure --prefix=$BUILD_PREFIX --with-hdf5=$BUILD_PREFIX &&\
+    cd matio-1.5.2 &&\
+    ./configure --prefix=$COMMON_BUILD_PREFIX --with-hdf5=$COMMON_BUILD_PREFIX &&\
     make -j3 install &&\
     /bin/true
 
@@ -95,12 +105,12 @@ RUN source scl_source enable devtoolset-7 &&\
 FROM common as boost_done
 
 ## boost
-RUN source scl_source enable devtoolset-7 &&\
+RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
     wget -O boost-1.59.0.tgz http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz/download &&\
     tar -xvzf boost-1.59.0.tgz &&\
     cd boost_1_59_0 &&\
-    ./bootstrap.sh --prefix=$BUILD_PREFIX --with-libraries=date_time,filesystem,program_options,system,thread,chrono &&\
+    ./bootstrap.sh --prefix=$COMMON_BUILD_PREFIX --with-libraries=date_time,filesystem,program_options,system,thread,chrono &&\
     ./b2 &&\
     ./b2 install &&\
     /bin/true
@@ -109,12 +119,12 @@ RUN source scl_source enable devtoolset-7 &&\
 FROM common as gsl_done
 
 ## gsl
-RUN source scl_source enable devtoolset-7 &&\
+RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
     wget ftp://ftp.gnu.org/gnu/gsl/gsl-2.5.tar.gz &&\
     tar -xvzf gsl-2.5.tar.gz &&\
     cd gsl-2.5 &&\
-    ./configure --prefix=$BUILD_PREFIX &&\
+    ./configure --prefix=$COMMON_BUILD_PREFIX &&\
     make -j3 all &&\ 
     make install &&\
     /bin/true
@@ -122,21 +132,20 @@ RUN source scl_source enable devtoolset-7 &&\
 ##########################
 FROM common as root_done
 
-COPY --from=cmake_done $BUILD_PREFIX $BUILD_PREFIX
-COPY --from=hdf5_done $BUILD_PREFIX $BUILD_PREFIX
-COPY --from=fftw3_done $BUILD_PREFIX $BUILD_PREFIX
-COPY --from=gsl_done $BUILD_PREFIX $BUILD_PREFIX
+COPY --from=cmake_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
+COPY --from=hdf5_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
+COPY --from=fftw3_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
+COPY --from=gsl_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 
 ## root
-RUN source scl_source enable devtoolset-7 &&\
-    source scl_source enable rh-python36 &&\
+RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
     wget https://root.cern.ch/download/root_v6.13.02.source.tar.gz &&\
     tar -xvzf root_v6.13.02.source.tar.gz &&\
     cd root-6.13.02 &&\
     mkdir my_build &&\
     cd my_build &&\
-    cmake -D CMAKE_INSTALL_PREFIX:PATH=$BUILD_PREFIX \
+    cmake -D CMAKE_INSTALL_PREFIX:PATH=$COMMON_BUILD_PREFIX \
             -D gnuinstall=ON -D roofit=ON .. &&\
     make -j3 install &&\
     /bin/true
@@ -144,15 +153,13 @@ RUN source scl_source enable devtoolset-7 &&\
 ########################
 FROM gcc-base
 
-ENV BUILD_PREFIX=/usr/local/p8/common-2018-11-01
-
-COPY --from=common $BUILD_PREFIX $BUILD_PREFIX
-COPY --from=cmake_done $BUILD_PREFIX $BUILD_PREFIX
-COPY --from=git_done $BUILD_PREFIX $BUILD_PREFIX
-COPY --from=hdf5_done $BUILD_PREFIX $BUILD_PREFIX
-COPY --from=fftw3_done $BUILD_PREFIX $BUILD_PREFIX
-COPY --from=matio_done $BUILD_PREFIX $BUILD_PREFIX
-COPY --from=boost_done $BUILD_PREFIX $BUILD_PREFIX
-COPY --from=root_done $BUILD_PREFIX $BUILD_PREFIX
-COPY --from=gsl_done $BUILD_PREFIX $BUILD_PREFIX
+COPY --from=common $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
+COPY --from=cmake_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
+COPY --from=git_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
+COPY --from=hdf5_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
+COPY --from=fftw3_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
+COPY --from=matio_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
+COPY --from=boost_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
+COPY --from=root_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
+COPY --from=gsl_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 

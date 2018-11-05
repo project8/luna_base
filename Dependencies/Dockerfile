@@ -1,46 +1,28 @@
 FROM project8/p8compute_bare as gcc-base
 
 # get gcc from package manager
-##    yum -y --enablerepo=centos-sclo-rh-testing install \
 RUN yum -y install centos-release-scl-rh &&\
     yum -y install \
         devtoolset-7-gcc-c++ \
+        rh-python36-python-devel \
         zlib-devel \
         perl-devel \
-        gettext-devel &&\
-    yum -y install wget
-#COPY ./scl_enable /usr/local/src/scl_enable
-#ENV BASH_ENV=/usr/local/src/scl_enable \
-#    ENV=/usr/local/src/scl_enable \
-#    PROMPT_COMMAND=". /usr/local/src/scl_enable"
+        gettext-devel \
+        libX11-devel \
+        libXpm-devel \
+        libXft-devel \
+        libXext-devel \
+        wget
 
+ENV BUILD_PREFIX=/usr/local/p8/common-2018-11-01
+ENV PATH=$BUILD_PREFIX/bin:$PATH
+RUN mkdir -p $BUILD_PREFIX && \
+    ln -s $BUILD_PREFIX $BUILD_PREFIX/../common
 
 ##########################
 FROM gcc-base as common
 
 RUN mkdir -p /tmp_install
-
-#COPY ./setup.sh /tmp_install/setup.sh
-#COPY ./dependency_urls.txt /tmp_install/dependency_urls.txt
-#COPY ./download_pkg.sh /tmp_install/download_pkg.sh
-#COPY ./install.sh /tmp_install/install.sh
-#COPY ./run-cvmfs-install.sh /tmp_install/run-cvmfs-install.sh
-#COPY ./cleanup.sh /tmp_install/cleanup.sh
-
-#RUN /bin/true &&\
-#    source /usr/local/src/scl_enable &&\
-    #cd /tmp_install && \
-    ##source /opt/rh/devtoolset-3/enable && \
-    ##scl enable devtoolset-6
-    #/tmp_install/run-cvmfs-install.sh && \
-    #/tmp_install/cleanup.sh && \
-    #rm -rf /tmp_install &&\
-#    /bin/true
-
-ENV BUILD_PREFIX=/usr/local/p8/common-2018-11-01
-ENV PATH=$BUILD_PREFIX:$PATH
-RUN mkdir -p $BUILD_PREFIX && \
-    ln -s $BUILD_PREFIX $BUILD_PREFIX/../common
 
 ##########################
 FROM common as cmake_done
@@ -68,19 +50,6 @@ RUN source scl_source enable devtoolset-7 &&\
     make -j3 install &&\
     /bin/true
    
-##########################
-FROM common as python_done
-
-# Python
-RUN source scl_source enable devtoolset-7 &&\
-    cd /tmp_install &&\
-    wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tgz &&\
-    tar -xvzf Python-3.6.4.tgz &&\
-    cd Python-3.6.4 &&\
-    ./configure --enable-shared --prefix=$BUILD_PREFIX &&\
-    make -j3 install &&\
-    /bin/true
-
 ##########################
 FROM common as hdf5_done
 
@@ -137,15 +106,30 @@ RUN source scl_source enable devtoolset-7 &&\
     /bin/true
 
 ##########################
+FROM common as gsl_done
+
+## gsl
+RUN source scl_source enable devtoolset-7 &&\
+    cd /tmp_install &&\
+    wget ftp://ftp.gnu.org/gnu/gsl/gsl-2.5.tar.gz &&\
+    tar -xvzf gsl-2.5.tar.gz &&\
+    cd gsl-2.5 &&\
+    ./configure --prefix=$BUILD_PREFIX &&\
+    make -j3 all &&\ 
+    make install &&\
+    /bin/true
+
+##########################
 FROM common as root_done
 
 COPY --from=cmake_done $BUILD_PREFIX $BUILD_PREFIX
-COPY --from=python_done $BUILD_PREFIX $BUILD_PREFIX
 COPY --from=hdf5_done $BUILD_PREFIX $BUILD_PREFIX
 COPY --from=fftw3_done $BUILD_PREFIX $BUILD_PREFIX
+COPY --from=gsl_done $BUILD_PREFIX $BUILD_PREFIX
 
 ## root
 RUN source scl_source enable devtoolset-7 &&\
+    source scl_source enable rh-python36 &&\
     cd /tmp_install &&\
     wget https://root.cern.ch/download/root_v6.13.02.source.tar.gz &&\
     tar -xvzf root_v6.13.02.source.tar.gz &&\
@@ -153,8 +137,7 @@ RUN source scl_source enable devtoolset-7 &&\
     mkdir my_build &&\
     cd my_build &&\
     cmake -D CMAKE_INSTALL_PREFIX:PATH=$BUILD_PREFIX \
-            -D PYTHON_EXECUTABLE=${BUILD_PREFIX}/bin/python3 \
-            -D gnuinstall=ON -D roofit=ON  -D builtin_gsl=ON .. &&\
+            -D gnuinstall=ON -D roofit=ON .. &&\
     make -j3 install &&\
     /bin/true
 
@@ -166,10 +149,10 @@ ENV BUILD_PREFIX=/usr/local/p8/common-2018-11-01
 COPY --from=common $BUILD_PREFIX $BUILD_PREFIX
 COPY --from=cmake_done $BUILD_PREFIX $BUILD_PREFIX
 COPY --from=git_done $BUILD_PREFIX $BUILD_PREFIX
-COPY --from=python_done $BUILD_PREFIX $BUILD_PREFIX
 COPY --from=hdf5_done $BUILD_PREFIX $BUILD_PREFIX
 COPY --from=fftw3_done $BUILD_PREFIX $BUILD_PREFIX
 COPY --from=matio_done $BUILD_PREFIX $BUILD_PREFIX
 COPY --from=boost_done $BUILD_PREFIX $BUILD_PREFIX
 COPY --from=root_done $BUILD_PREFIX $BUILD_PREFIX
+COPY --from=gsl_done $BUILD_PREFIX $BUILD_PREFIX
 

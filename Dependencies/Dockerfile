@@ -89,7 +89,7 @@ RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     /bin/true
 
 ##########################
-FROM hdf5_done as matio_done
+FROM common as matio_done
 
 COPY --from=hdf5_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 

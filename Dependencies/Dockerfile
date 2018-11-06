@@ -14,15 +14,17 @@ RUN yum -y install centos-release-scl-rh &&\
         libXext-devel \
         wget
 
-ENV COMMON_BUILD_PREFIX=/usr/local/p8/common-v0.1.0
+ENV COMMON_TAG=v0.2.0
+ENV COMMON_BUILD_PREFIX=/usr/local/p8/common/$COMMON_TAG
 
 RUN mkdir -p $COMMON_BUILD_PREFIX &&\
     cd $COMMON_BUILD_PREFIX &&\
     echo "source scl_source enable devtoolset-7" > setup.sh &&\
     echo "source scl_source enable rh-python36" >> setup.sh &&\
     echo "unset PYTHONPATH" >> setup.sh &&\
+    echo "export COMMON_TAG=$COMMON_TAG" >> setup.sh &&\
     echo "export COMMON_BUILD_PREFIX=$COMMON_BUILD_PREFIX" >> setup.sh &&\
-    echo 'ln -sf $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX/../common' >> setup.sh &&\
+    echo 'ln -sf $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX/../current' >> setup.sh &&\
     echo 'export PATH=$COMMON_BUILD_PREFIX/bin:$PATH' >> setup.sh &&\
     echo 'export LD_LIBRARY_PATH=$COMMON_BUILD_PREFIX/lib:$COMMON_BUILD_PREFIX/lib/root:$LD_LIBRARY_PATH' >> setup.sh &&\
     /bin/true
@@ -87,7 +89,7 @@ RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     /bin/true
 
 ##########################
-FROM hdf5_done as matio_done
+FROM common as matio_done
 
 COPY --from=hdf5_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 

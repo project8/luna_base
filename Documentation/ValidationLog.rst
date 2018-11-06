@@ -43,7 +43,20 @@ Fixes:
 Log
 ---
 
-Version: 0.0.1
+Version: 0.2.0
+~~~~~~~~~~~~~~
+
+Release Date: November 6, 2018
+''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
+* Changed the directory structure to ``/usr/local/p8/[package]/[version]``
+* Added documentation
+
+
+Version: 0.1.0
 ~~~~~~~~~~~~~~
 
 Release Date: November 5, 2018

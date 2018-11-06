@@ -52,6 +52,18 @@ Release Date: November 5, 2018
 New Features:
 '''''''''''''
 
+* Added P8compute Dockerfile with Katydid and Locust
+
+
+Version: 0.0.1
+~~~~~~~~~~~~~~
+
+Release Date: November 5, 2018
+''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
 * Initial version of the Dependencies Dockerfile
     * Includes gcc, Python, CMake, Git, HDF5, FFTW3, Matio, Boost, GSL, and ROOT
     

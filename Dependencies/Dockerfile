@@ -165,3 +165,6 @@ COPY --from=boost_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 COPY --from=root_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 COPY --from=gsl_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 
+RUN cd $COMMON_BUILD_PREFIX &&\
+    echo "source $COMMON_BUILD_PREFIX/bin/thisroot.sh" >> setup.sh &&\
+    /bin/true

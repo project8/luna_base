@@ -153,7 +153,29 @@ RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     /bin/true
 
 ########################
-FROM gcc-base
+FROM common as temp
+
+# Python package installation
+RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
+    pip3 install --upgrade pip &&\
+    pip3 -v install \
+        PyYAML==3.13 \
+        pyparsing==2.1.5 \
+        dnspython==1.12.0 \
+        cycler==0.10.0 \
+        python-dateutil==2.7.2 \
+        pystan==2.17.1.0 \
+        numpy>=1.14 \
+        uproot==2.8.16 \
+        lz4==1.1.0 \
+        pbr==0.10.8 \
+        six &&\
+    /bin/true
+
+
+########################
+#FROM gcc-base
+FROM temp
 
 COPY --from=common $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 COPY --from=cmake_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX

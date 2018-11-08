@@ -153,7 +153,7 @@ RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     /bin/true
 
 ########################
-FROM common as temp
+FROM gcc-base as temp
 
 # Python package installation
 RUN source $COMMON_BUILD_PREFIX/setup.sh &&\

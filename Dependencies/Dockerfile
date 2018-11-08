@@ -125,9 +125,9 @@ FROM common as boost_done
 ## boost
 RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
-    wget -O boost-1.59.0.tgz http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz/download &&\
-    tar -xvzf boost-1.59.0.tgz &&\
-    cd boost_1_59_0 &&\
+    wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gz &&\
+    tar -xvzf boost_1_68_0.tar.gz &&\
+    cd boost_1_68_0 &&\
     ./bootstrap.sh --prefix=$COMMON_BUILD_PREFIX --with-libraries=date_time,filesystem,program_options,system,thread,chrono &&\
     ./b2 &&\
     ./b2 install &&\

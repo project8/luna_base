@@ -24,9 +24,25 @@ RUN mkdir -p $COMMON_BUILD_PREFIX &&\
     echo "unset PYTHONPATH" >> setup.sh &&\
     echo "export COMMON_TAG=$COMMON_TAG" >> setup.sh &&\
     echo "export COMMON_BUILD_PREFIX=$COMMON_BUILD_PREFIX" >> setup.sh &&\
-    echo 'ln -sf $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX/../current' >> setup.sh &&\
+    echo 'ln -sf $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX/../current || /bin/true' >> setup.sh &&\
     echo 'export PATH=$COMMON_BUILD_PREFIX/bin:$PATH' >> setup.sh &&\
     echo 'export LD_LIBRARY_PATH=$COMMON_BUILD_PREFIX/lib:$COMMON_BUILD_PREFIX/lib/root:$LD_LIBRARY_PATH' >> setup.sh &&\
+    /bin/true
+
+RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
+    pip3 install --upgrade pip &&\
+    pip3 -v install \
+        PyYAML==3.13 \
+        pyparsing==2.1.5 \
+        dnspython==1.12.0 \
+        cycler==0.10.0 \
+        python-dateutil==2.7.2 \
+        pystan==2.17.1.0 \
+        numpy>=1.14 \
+        uproot==2.8.16 \
+        lz4==1.1.0 \
+        pbr==0.10.8 \
+        six &&\
     /bin/true
 
 ##########################
@@ -109,9 +125,9 @@ FROM common as boost_done
 ## boost
 RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
-    wget -O boost-1.59.0.tgz http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz/download &&\
-    tar -xvzf boost-1.59.0.tgz &&\
-    cd boost_1_59_0 &&\
+    wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gz &&\
+    tar -xvzf boost_1_68_0.tar.gz &&\
+    cd boost_1_68_0 &&\
     ./bootstrap.sh --prefix=$COMMON_BUILD_PREFIX --with-libraries=date_time,filesystem,program_options,system,thread,chrono &&\
     ./b2 &&\
     ./b2 install &&\
@@ -165,3 +181,6 @@ COPY --from=boost_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 COPY --from=root_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 COPY --from=gsl_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 
+RUN cd $COMMON_BUILD_PREFIX &&\
+    echo "source $COMMON_BUILD_PREFIX/bin/thisroot.sh" >> setup.sh &&\
+    /bin/true

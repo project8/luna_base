@@ -171,6 +171,12 @@ RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
 ########################
 FROM gcc-base
 
+RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
+    pip3 install --upgrade pip &&\
+    pip3 -v install \
+        colorlog &&\
+    /bin/true
+
 COPY --from=common $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 COPY --from=cmake_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 COPY --from=git_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX

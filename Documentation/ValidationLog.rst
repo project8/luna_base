@@ -43,7 +43,24 @@ Fixes:
 Log
 ---
 
-Version: 0.0.1
+Version: 0.2.0
+~~~~~~~~~~~~~~
+
+Release Date: November 30, 2018
+'''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
+* Changed the directory structure to ``/usr/local/p8/[package]/[version]``
+* Added documentation
+* Locust v1.8.2
+* Katydid v2.15.0
+* Boost 1.68.0
+* New Dockerfile: p8compute-jupyter
+
+
+Version: 0.1.0
 ~~~~~~~~~~~~~~
 
 Release Date: November 5, 2018

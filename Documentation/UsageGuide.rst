@@ -6,7 +6,7 @@ These instructions assume that you have `installed <https://docs.docker.com/inst
 Running P8Compute
 -----------------
 
-The ``p8compute`` container is available on `Docker Hub <https://hub.docker.com/r/project8/p8compute/>`_.  In the current testing phase you need to specify the tag (e.g. ``v0.2.0_test``).
+The ``p8compute`` container is available on `Docker Hub <https://hub.docker.com/r/project8/p8compute/>`_.  In the current testing phase you need to specify the tag (e.g. ``v0.2.0``).
 
 You can run the image interactively from the command line::
 
@@ -57,10 +57,6 @@ If you're using the ``p8compute`` container, it's recommended that you change ve
 Within DIRAC
 ------------
 
-These instructions are for setting up the ``p8compute`` image for use in DIRAC, which most users don't need to do.
+There are currently no special instructions for using the container within DIRAC.
 
-There's a special setup script that creates the fake ``cvmfs`` directory structure.  It creates the directory ``/cvmfs/p8.hep.pnnl.gov`` and then the symbolic link ``/cvmfs/p8.hep.pnnl.gov/project8 --> /usr/local/p8``::
-
-    p8compute> source /usr/local/p8/compute/[version]/setup_cvmfs.sh
-
-It also sources the normal ``setup.sh``, so you only need to use one script.
+The CVMFS-like directory structure is built into the p8compute container for backwards compatibility with existing DIRAC transformations.

@@ -15,7 +15,7 @@ Dependencies
 * HDF5: 1.8.18
 * FFTW3: 3.3.4
 * Matio: 1.5.2
-* Boost: 1.59.0
+* Boost: 1.68.0
   * Libraries: chrono, date_time, filesystem, program_options, system, thread
 * GSL: 2.5
 * ROOT: 6.13.02

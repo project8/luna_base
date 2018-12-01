@@ -43,6 +43,18 @@ Fixes:
 Log
 ---
 
+Version: 0.2.1
+~~~~~~~~~~~~~~
+
+Release Date: November 30, 2018
+'''''''''''''''''''''''''''''''
+
+Fixes:
+'''''''''''''
+
+* Source the this_katydid.sh script in the Jupyter Dockerfile
+
+
 Version: 0.2.0
 ~~~~~~~~~~~~~~
 

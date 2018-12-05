@@ -43,17 +43,33 @@ Fixes:
 Log
 ---
 
+Version: 0.2.1
+~~~~~~~~~~~~~~
+
+Release Date: November 30, 2018
+'''''''''''''''''''''''''''''''
+
+Fixes:
+'''''''''''''
+
+* Source the this_katydid.sh script in the Jupyter Dockerfile
+
+
 Version: 0.2.0
 ~~~~~~~~~~~~~~
 
-Release Date: November 6, 2018
-''''''''''''''''''''''''''''''
+Release Date: November 30, 2018
+'''''''''''''''''''''''''''''''
 
 New Features:
 '''''''''''''
 
 * Changed the directory structure to ``/usr/local/p8/[package]/[version]``
 * Added documentation
+* Locust v1.8.2
+* Katydid v2.15.0
+* Boost 1.68.0
+* New Dockerfile: p8compute-jupyter
 
 
 Version: 0.1.0

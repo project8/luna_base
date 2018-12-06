@@ -14,7 +14,7 @@ RUN yum -y install centos-release-scl-rh &&\
         libXext-devel \
         wget
 
-ENV COMMON_TAG=v0.3.0_dev
+ENV COMMON_TAG=v0.3.0
 ENV COMMON_BUILD_PREFIX=/usr/local/p8/common/$COMMON_TAG
 
 # Create the setup.sh script

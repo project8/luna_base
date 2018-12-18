@@ -43,6 +43,24 @@ Fixes:
 Log
 ---
 
+Version: 0.3.0
+~~~~~~~~~~~~~~
+
+Release Date: December 6, 2018
+'''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
+* Added Mermithid v1.1.4
+* New Katydid version: 2.15.1
+* New Locust version: 1.8.3
+
+Fixes:
+'''''''''''''
+
+* Fix the setting of the environment in the common section
+
 Version: 0.2.1
 ~~~~~~~~~~~~~~
 

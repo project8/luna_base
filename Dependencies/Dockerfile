@@ -36,18 +36,18 @@ RUN mkdir -p $COMMON_BUILD_PREFIX &&\
 RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     pip3 install --upgrade pip &&\
     pip3 -v install \
-        PyYAML==3.13 \
-        pyparsing==2.1.5 \
-        dnspython==1.12.0 \
-        cycler==0.10.0 \
-        python-dateutil==2.7.2 \
-        pystan==2.17.1.0 \
-        numpy>=1.14 \
-        uproot==2.8.16 \
-        lz4==1.1.0 \
-        pbr==0.10.8 \
-        six \
-        colorlog &&\
+        'PyYAML==3.13' \
+        'pyparsing==2.1.5' \
+        'dnspython==1.12.0' \
+        'cycler==0.10.0' \
+        'python-dateutil==2.7.2' \
+        'pystan==2.17.1.0' \
+        'numpy>=1.14' \
+        'uproot==2.8.16' \
+        'lz4==1.1.0' \
+        'pbr==0.10.8' \
+        'six' \
+        'colorlog' &&\
     /bin/true
 
 ##########################

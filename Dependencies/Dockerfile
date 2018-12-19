@@ -28,7 +28,7 @@ RUN mkdir -p $COMMON_BUILD_PREFIX &&\
     echo "unset PYTHONPATH" >> setup.sh &&\
     echo "export COMMON_TAG=$COMMON_TAG" >> setup.sh &&\
     echo "export COMMON_BUILD_PREFIX=$COMMON_BUILD_PREFIX" >> setup.sh &&\
-    echo 'ln -sf $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX/../current || /bin/true' >> setup.sh &&\
+    echo 'ln -sfT $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX/../current || /bin/true' >> setup.sh &&\
     echo 'export PATH=$COMMON_BUILD_PREFIX/bin:$PATH' >> setup.sh &&\
     echo 'export LD_LIBRARY_PATH=$COMMON_BUILD_PREFIX/lib:$LD_LIBRARY_PATH' >> setup.sh &&\
     /bin/true

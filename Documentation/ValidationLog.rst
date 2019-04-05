@@ -43,7 +43,7 @@ Fixes:
 Log
 ---
 
-Version: 0.X.Y
+Version: 0.4.1
 ~~~~~~~~~~~~~~
 
 Release Date: 
@@ -53,6 +53,7 @@ New Features:
 '''''''''''''
 
 * New Mermithid version: v1.1.7
+* Update to pystan v2.18.1.0
 
 
 Version: 0.4.0

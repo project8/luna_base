@@ -7,7 +7,8 @@ Luna v0.X.Y
 Dependencies
 ~~~~~~~~~~~~
 
-Same as Luna v0.2.0
+* Same as Luna v0.2.0
+* Pystan v2.18.1.0
 
 P8Compute
 ~~~~~~~~~

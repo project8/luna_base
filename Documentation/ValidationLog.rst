@@ -43,6 +43,18 @@ Fixes:
 Log
 ---
 
+Version: 0.X.Y
+~~~~~~~~~~~~~~
+
+Release Date: 
+'''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
+* New Mermithid version: v1.1.7
+
+
 Version: 0.4.0
 ~~~~~~~~~~~~~~
 

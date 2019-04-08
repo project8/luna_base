@@ -6,11 +6,11 @@ These instructions assume that you have `installed <https://docs.docker.com/inst
 Running P8Compute
 -----------------
 
-The ``p8compute`` container is available on `Docker Hub <https://hub.docker.com/r/project8/p8compute/>`_.  In the current testing phase you need to specify the tag (e.g. ``v0.2.0``).
+The ``p8compute`` container is available on `Docker Hub <https://hub.docker.com/r/project8/p8compute/>`_.  To specify versions, you can use a docker tag, either ``latest`` or a particular version (e.g. ``v0.4.0``).
 
 You can run the image interactively from the command line::
 
-    host> docker run -it project8/p8compute:v0.2.0_test /bin/bash
+    host> docker run -it project8/p8compute:latest /bin/bash
 
 You then need to setup the appropriate environment using the setup script::
 

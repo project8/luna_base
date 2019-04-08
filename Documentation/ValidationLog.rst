@@ -43,7 +43,7 @@ Fixes:
 Log
 ---
 
-Version: 0.4.1
+Version: 0.X.Y
 ~~~~~~~~~~~~~~
 
 Release Date: 
@@ -52,6 +52,7 @@ Release Date:
 New Features:
 '''''''''''''
 
+* New Locust version: v1.10.3
 * New Mermithid version: v1.1.7
 * Update to pystan v2.18.1.0
 

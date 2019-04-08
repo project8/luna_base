@@ -13,6 +13,7 @@ Dependencies
 P8Compute
 ~~~~~~~~~
 
+* Locust_mc: v1.10.3
 * Mermithid: v1.1.7
 
 

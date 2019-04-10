@@ -1,7 +1,7 @@
 Software Versions
 =================
 
-Luna v0.X.Y
+Luna v0.5.0
 -----------
 
 Dependencies

@@ -1,6 +1,23 @@
 Software Versions
 =================
 
+Luna v0.5.0
+-----------
+
+Dependencies
+~~~~~~~~~~~~
+
+* Same as Luna v0.2.0
+* Pystan v2.18.1.0
+
+P8Compute
+~~~~~~~~~
+
+* Locust_mc: v1.11.0
+* Katydid: v2.15.3
+* Mermithid: v1.1.8
+
+
 Luna v0.4.0
 -----------
 

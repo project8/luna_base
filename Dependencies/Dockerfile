@@ -14,7 +14,7 @@ RUN yum -y install centos-release-scl-rh &&\
         libXext-devel \
         wget
 
-ENV COMMON_TAG=v0.4.1
+ENV COMMON_TAG=v0.5.0
 ENV COMMON_BUILD_PREFIX=/usr/local/p8/common/$COMMON_TAG
 
 # Create the setup.sh script
@@ -37,21 +37,20 @@ RUN mkdir -p $COMMON_BUILD_PREFIX &&\
 RUN source scl_source enable devtoolset-7 &&\
     source scl_source enable rh-python36 &&\
     unset PYTHONPATH &&\
-    pip3 install --upgrade pip==9.0.3 &&\
+    pip3 install --upgrade pip &&\
     pip3 -v install \
         'PyYAML==3.13' \
         'pyparsing==2.1.5' \
         'dnspython==1.12.0' \
         'cycler==0.10.0' \
         'python-dateutil==2.7.2' \
-        'pystan==2.18.1.0' \
+        'pystan==2.17.1.0' \
         'numpy>=1.14' \
         'uproot==2.8.16' \
         'lz4==1.1.0' \
         'pbr==0.10.8' \
         'six' \
-        'colorlog' \
-        'asteval' &&\
+        'colorlog' &&\
     /bin/true
 
 ##########################

@@ -46,14 +46,17 @@ Log
 Version: 0.5.0
 ~~~~~~~~~~~~~~
 
-Release Date: 
+Release Date: June 17, 2019
 '''''''''''''''''''''''''''''''
+
+Note that while this was released in June, work was completed in April, 2019.
 
 New Features:
 '''''''''''''
 
-* New Locust version: v1.10.3
-* New Mermithid version: v1.1.7
+* New Locust version: v1.11.0
+* New Mermithid version: v1.1.8
+* New Katydid version: 2.15.3
 * Update to pystan v2.18.1.0
 
 

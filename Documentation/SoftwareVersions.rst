@@ -13,8 +13,9 @@ Dependencies
 P8Compute
 ~~~~~~~~~
 
-* Locust_mc: v1.10.3
-* Mermithid: v1.1.7
+* Locust_mc: v1.11.0
+* Katydid: v2.15.3
+* Mermithid: v1.1.8
 
 
 Luna v0.4.0

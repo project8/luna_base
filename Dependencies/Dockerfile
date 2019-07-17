@@ -85,7 +85,7 @@ RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     ./configure --prefix=$COMMON_BUILD_PREFIX &&\
     make -j3 install &&\
     /bin/true
-   
+
 ##########################
 FROM common as hdf5_done
 
@@ -173,6 +173,26 @@ RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd my_build &&\
     cmake -D CMAKE_INSTALL_PREFIX:PATH=$COMMON_BUILD_PREFIX \
             -D gnuinstall=ON -D roofit=ON .. &&\
+    make -j3 install &&\
+    /bin/true
+
+##########################
+FROM common as rabbitmq_done
+
+COPY --from=cmake_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
+
+## rabbitmq-c
+RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
+    cd /tmp_install &&\
+    wget https://github.com/alanxz/rabbitmq-c/archive/v0.9.0.tar.gz &&\
+    tar -xvzf v0.9.0.tar.gz &&\
+    mkdir rabbitmq-c-0.9.0/build &&\
+    cd rabbitmq-c-0.9.0/build &&\
+    cmake \
+        -D CMAKE_INSTALL_PREFIX=$COMMON_BUILD_PREFIX \
+        -D CMAKE_INSTALL_LIBDIR:PATH=lib \
+        -D ENABLE_SSL_SUPPORT:BOOL=FALSE \
+        .. &&\
     make -j3 install &&\
     /bin/true
 

@@ -50,7 +50,9 @@ RUN source scl_source enable devtoolset-7 &&\
         'lz4==1.1.0' \
         'pbr==0.10.8' \
         'six' \
-        'colorlog' &&\
+        'colorlog' \
+        'h5py' \
+        &&\
     /bin/true
 
 ##########################

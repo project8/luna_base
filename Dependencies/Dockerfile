@@ -47,7 +47,7 @@ RUN source scl_source enable devtoolset-7 &&\
         'pystan==2.17.1.0' \
         'numpy>=1.14' \
         'uproot==2.8.16' \
-        'lz4==1.1.0' \
+        'lz4' \
         'pbr==0.10.8' \
         'six' \
         'colorlog' \
@@ -67,9 +67,9 @@ FROM common as cmake_done
 ## cmake (install manually because the version in yum is too old, v2.8.12)
 RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
-    wget http://www.cmake.org/files/v3.4/cmake-3.4.3.tar.gz &&\
-    tar -xvzf cmake-3.4.3.tar.gz &&\
-    cd cmake-3.4.3 &&\
+    wget https://github.com/Kitware/CMake/releases/download/v3.15.0/cmake-3.15.0.tar.gz &&\
+    tar -xvzf cmake-3.15.0.tar.gz &&\
+    cd cmake-3.15.0 &&\
     ./configure --prefix=$COMMON_BUILD_PREFIX &&\
     make -j3 install &&\
     /bin/true
@@ -82,9 +82,10 @@ RUN yum install -y libcurl-devel
 ## git (install manually because the version in yum is too old)
 RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
-    wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.9.5.tar.gz &&\
-    tar -xvzf git-2.9.5.tar.gz &&\
-    cd git-2.9.5 &&\
+    wget https://github.com/git/git/archive/v2.22.0.tar.gz &&\
+    tar -xvzf v2.22.0.tar.gz &&\
+    cd git-2.22.0 &&\
+    make configure &&\
     ./configure --prefix=$COMMON_BUILD_PREFIX &&\
     make -j3 install &&\
     /bin/true
@@ -95,10 +96,10 @@ FROM common as hdf5_done
 ## hdf5
 RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
-    wget https://support.hdfgroup.org/ftp/HDF5/prev-releases/hdf5-1.8/hdf5-1.8.18/src/hdf5-1.8.18.tar.gz &&\
-    tar -xvzf hdf5-1.8.18.tar.gz &&\
-    cd hdf5-1.8.18 &&\
-    ./configure --prefix=$COMMON_BUILD_PREFIX --enable-cxx --enable-shared &&\
+    wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.5/src/hdf5-1.10.5.tar.gz &&\
+    tar -xvzf hdf5-1.10.5.tar.gz &&\
+    cd hdf5-1.10.5 &&\
+    ./configure --prefix=$COMMON_BUILD_PREFIX --enable-cxx --enable-shared --enable-unsupported --enable-threadsafe &&\
     make -j3 install &&\
     /bin/true
 
@@ -108,9 +109,9 @@ FROM common as fftw3_done
 ## fftw3
 RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
-    wget http://www.fftw.org/fftw-3.3.4.tar.gz &&\
-    tar -xvzf fftw-3.3.4.tar.gz &&\
-    cd fftw-3.3.4 &&\
+    wget http://www.fftw.org/fftw-3.3.8.tar.gz &&\
+    tar -xvzf fftw-3.3.8.tar.gz &&\
+    cd fftw-3.3.8 &&\
     ./configure --prefix=$COMMON_BUILD_PREFIX --enable-shared --enable-threads --with-pic &&\
     make -j3 install &&\
     /bin/true
@@ -123,10 +124,10 @@ COPY --from=hdf5_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 ## matio
 RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
-    wget http://sourceforge.net/projects/matio/files/matio/1.5.2/matio-1.5.2.tar.gz &&\
-    tar -xvzf matio-1.5.2.tar.gz &&\
-    cd matio-1.5.2 &&\
-    ./configure --prefix=$COMMON_BUILD_PREFIX --with-hdf5=$COMMON_BUILD_PREFIX &&\
+    wget https://github.com/tbeu/matio/releases/download/v1.5.17/matio-1.5.17.tar.gz &&\
+    tar -xvzf matio-1.5.17.tar.gz &&\
+    cd matio-1.5.17 &&\
+    ./configure --prefix=$COMMON_BUILD_PREFIX --with-hdf5=$COMMON_BUILD_PREFIX --with-default-api-version=v110 &&\
     make -j3 install &&\
     /bin/true
 
@@ -136,9 +137,9 @@ FROM common as boost_done
 ## boost
 RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
-    wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gz &&\
-    tar -xvzf boost_1_68_0.tar.gz &&\
-    cd boost_1_68_0 &&\
+    wget https://dl.bintray.com/boostorg/release/1.70.0/source/boost_1_70_0.tar.gz &&\
+    tar -xvzf boost_1_70_0.tar.gz &&\
+    cd boost_1_70_0 &&\
     ./bootstrap.sh --prefix=$COMMON_BUILD_PREFIX --with-libraries=date_time,filesystem,program_options,system,thread,chrono &&\
     ./b2 &&\
     ./b2 install &&\
@@ -150,7 +151,7 @@ FROM common as gsl_done
 ## gsl
 RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
-    wget ftp://ftp.gnu.org/gnu/gsl/gsl-2.5.tar.gz &&\
+    wget http://mirrors.ibiblio.org/gnu/ftp/gnu/gsl/gsl-2.5.tar.gz &&\
     tar -xvzf gsl-2.5.tar.gz &&\
     cd gsl-2.5 &&\
     ./configure --prefix=$COMMON_BUILD_PREFIX &&\
@@ -169,9 +170,9 @@ COPY --from=gsl_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 ## root
 RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
-    wget https://root.cern.ch/download/root_v6.13.02.source.tar.gz &&\
-    tar -xvzf root_v6.13.02.source.tar.gz &&\
-    cd root-6.13.02 &&\
+    wget https://root.cern/download/root_v6.18.00.source.tar.gz &&\
+    tar -xvzf root_v6.18.00.source.tar.gz &&\
+    cd root-6.18.00 &&\
     mkdir my_build &&\
     cd my_build &&\
     cmake -D CMAKE_INSTALL_PREFIX:PATH=$COMMON_BUILD_PREFIX \

@@ -43,6 +43,21 @@ Fixes:
 Log
 ---
 
+Version: 0.7.0
+~~~~~~~~~~~~~~
+
+Release Date: July ??, 2019
+'''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
+* New Locust version: v1.13.0
+* New Mermithid version: v1.1.9
+* New Katydid version: 2.17.0
+* Updated dependencies (see Software Versions)
+
+
 Version: 0.5.0
 ~~~~~~~~~~~~~~
 

@@ -1,6 +1,35 @@
 Software Versions
 =================
 
+Luna v0.7.0
+-----------
+
+Dependencies
+~~~~~~~~~~~~
+
+* OS: CentOS 6
+* gcc: 7.3.1
+* Python: 3.6.3
+* Pystan v2.18.1.0
+* CMake: 3.15.0
+* Git: 2.22.0
+* HDF5: 1.10.5
+* FFTW3: 3.3.8
+* Matio: 1.5.17
+* Boost: 1.70.0
+  * Libraries: chrono, date_time, filesystem, program_options, system, thread
+* GSL: 2.5
+* ROOT: 6.18.0
+* rabbitmq-c: 0.9.0
+
+P8Compute
+~~~~~~~~~
+
+* Katydid: v2.17.0
+* Locust_mc: v1.13.0
+* Mermithid: v1.1.9
+
+
 Luna v0.5.0
 -----------
 

@@ -26,8 +26,9 @@ P8Compute
 ~~~~~~~~~
 
 * Katydid: v2.17.0
-* Locust_mc: v1.13.0
+* Locust_mc: v1.11.0 *NOTE: use compute/v0.5.0*
 * Mermithid: v1.1.9
+* Psyllid: v1.12.1
 
 
 Luna v0.5.0

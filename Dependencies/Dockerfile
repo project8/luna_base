@@ -14,7 +14,7 @@ RUN yum -y install centos-release-scl-rh &&\
         libXext-devel \
         wget
 
-ENV COMMON_TAG=v0.4.0
+ENV COMMON_TAG=v0.7.0
 ENV COMMON_BUILD_PREFIX=/usr/local/p8/common/$COMMON_TAG
 
 # Create the setup.sh script
@@ -37,7 +37,7 @@ RUN mkdir -p $COMMON_BUILD_PREFIX &&\
 RUN source scl_source enable devtoolset-7 &&\
     source scl_source enable rh-python36 &&\
     unset PYTHONPATH &&\
-    pip3 install --upgrade pip &&\
+    pip3 install --upgrade pip==18.1 &&\
     pip3 -v install \
         'PyYAML==3.13' \
         'pyparsing==2.1.5' \

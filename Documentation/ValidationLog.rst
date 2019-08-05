@@ -43,6 +43,19 @@ Fixes:
 Log
 ---
 
+Version: 0.8.0
+~~~~~~~~~~~~~~
+
+Release Date: August 5, 2019
+'''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
+* New Mermithid version: v1.1.10
+* New Locust version, with Kassiopeia disabled: v1.13.3
+
+
 Version: 0.7.0
 ~~~~~~~~~~~~~~
 

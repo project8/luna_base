@@ -1,6 +1,23 @@
 Software Versions
 =================
 
+Luna v0.8.0
+-----------
+
+Dependencies
+~~~~~~~~~~~~
+
+* Same as Luna v0.7.0
+
+P8Compute
+~~~~~~~~~
+
+* Katydid: v2.17.0
+* Locust_mc: v1.13.3 *NOTE: Kassiopeia disabled; use compute/v0.5.0 for Kassiopeia*
+* Mermithid: v1.1.10
+* Psyllid: v1.12.1
+
+
 Luna v0.7.0
 -----------
 

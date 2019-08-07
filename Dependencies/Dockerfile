@@ -53,6 +53,7 @@ RUN source scl_source enable devtoolset-7 &&\
         'colorlog' \
         'h5py' \
         'matplotlib' \
+        'scipy==1.3.0' \
         &&\
     /bin/true
 

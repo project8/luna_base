@@ -46,7 +46,7 @@ Log
 Version: 0.8.0
 ~~~~~~~~~~~~~~
 
-Release Date: August 5, 2019
+Release Date: August 9, 2019
 '''''''''''''''''''''''''''''''
 
 New Features:

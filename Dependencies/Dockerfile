@@ -44,7 +44,7 @@ RUN source scl_source enable devtoolset-7 &&\
         'dnspython==1.12.0' \
         'cycler==0.10.0' \
         'python-dateutil==2.7.2' \
-        'pystan==2.17.1.0' \
+        'pystan==2.19.0.0' \
         'numpy>=1.14' \
         'uproot==2.8.16' \
         'lz4' \
@@ -53,6 +53,8 @@ RUN source scl_source enable devtoolset-7 &&\
         'colorlog' \
         'h5py' \
         'matplotlib' \
+        'scipy==1.3.0' \
+        'asteval' \
         &&\
     /bin/true
 

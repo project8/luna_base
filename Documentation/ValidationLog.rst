@@ -43,6 +43,22 @@ Fixes:
 Log
 ---
 
+Version: 0.9.0
+~~~~~~~~~~~~~~
+
+Release Date: August 27, 2019
+'''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
+* Added scipy to the dependencies image
+* New Katydid version: v2.17.1
+* New Locust version, with Kassiopeia disabled: v1.14.2
+* New Mermithid version: v1.1.11
+* New Psyllid version: v2.12.2
+
+
 Version: 0.8.0
 ~~~~~~~~~~~~~~
 

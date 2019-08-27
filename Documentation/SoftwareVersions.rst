@@ -1,6 +1,24 @@
 Software Versions
 =================
 
+Luna v0.9.0
+-----------
+
+Dependencies
+~~~~~~~~~~~~
+
+* Scipy v1.3.0
+* Pystan v2.17.1
+
+P8Compute
+~~~~~~~~~
+
+* Katydid: v2.17.1
+* Locust_mc: v1.14.2 *NOTE: Kassiopeia disabled; use compute/v0.5.0 for Kassiopeia*
+* Mermithid: v1.1.11
+* Psyllid: v1.12.2
+
+
 Luna v0.8.0
 -----------
 

@@ -43,6 +43,18 @@ Fixes:
 Log
 ---
 
+Version: 0.9.1
+~~~~~~~~~~~~~~
+
+Release Date: September 9, 2019
+'''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
+* New Locust version, with Kassiopeia disabled: v1.14.3
+
+
 Version: 0.9.0
 ~~~~~~~~~~~~~~
 

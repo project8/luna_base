@@ -53,7 +53,7 @@ New Features:
 '''''''''''''
 
 * New Katydid version
-* New Locust version, with Kassiopeia disabled: v1.15.5
+* New Locust version, with Kassiopeia disabled: v1.15.6
 
 
 Version: 0.9.3

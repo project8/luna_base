@@ -8,7 +8,7 @@ P8Compute
 ~~~~~~~~~
 
 * Katydid: v2.17.2
-* Locust_mc: v1.15.5 *NOTE: Kassiopeia disabled; use compute/v0.5.0 for Kassiopeia*
+* Locust_mc: v1.15.6 *NOTE: Kassiopeia disabled; use compute/v0.5.0 for Kassiopeia*
 
 
 LLuna v0.9.3

@@ -43,6 +43,19 @@ Fixes:
 Log
 ---
 
+Version: 0.9.4
+~~~~~~~~~~~~~~
+
+Release Date: November 12, 2019
+'''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
+* New Katydid version
+* New Locust version, with Kassiopeia disabled: v1.15.6
+
+
 Version: 0.9.3
 ~~~~~~~~~~~~~~
 

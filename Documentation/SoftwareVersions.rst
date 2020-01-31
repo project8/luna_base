@@ -1,6 +1,15 @@
 Software Versions
 =================
 
+Luna v0.9.5
+-----------
+
+P8Compute
+~~~~~~~~~
+
+* Locust_mc: v1.15.9 *NOTE: Kassiopeia disabled; use compute/v0.5.0 for Kassiopeia*
+
+
 Luna v0.9.4
 -----------
 
@@ -11,7 +20,7 @@ P8Compute
 * Locust_mc: v1.15.6 *NOTE: Kassiopeia disabled; use compute/v0.5.0 for Kassiopeia*
 
 
-LLuna v0.9.3
+Luna v0.9.3
 -----------
 
 P8Compute

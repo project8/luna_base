@@ -43,6 +43,30 @@ Fixes:
 Log
 ---
 
+Version: 0.9.8
+~~~~~~~~~~~~~~
+
+Release Date: June 5, 2020
+'''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
+* New Mermithid version: v1.2.1
+
+
+Version: 0.9.7
+~~~~~~~~~~~~~~
+
+Release Date: June 4, 2020
+'''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
+* New Mermithid version: v1.2.0
+
+
 Version: 0.9.6
 ~~~~~~~~~~~~~~
 

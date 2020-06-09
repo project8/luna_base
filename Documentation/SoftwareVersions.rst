@@ -1,6 +1,15 @@
 Software Versions
 =================
 
+Luna v0.9.9
+-----------
+
+P8Compute
+~~~~~~~~~
+
+* Mermithid: v1.2.2
+
+
 Luna v0.9.8
 -----------
 

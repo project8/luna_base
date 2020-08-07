@@ -1,6 +1,15 @@
 Software Versions
 =================
 
+Luna v0.10.0
+------------
+
+P8Compute
+~~~~~~~~~
+
+* Locust_mc: v2.0.0 *NOTE: Kassiopeia is now included*
+
+
 Luna v0.9.9
 -----------
 

@@ -43,6 +43,19 @@ Fixes:
 Log
 ---
 
+Version: 0.10.1
+~~~~~~~~~~~~~~~
+
+Release Date: October 23, 2020
+'''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
+* New Locust version: v2.1.2
+* New Katydid version: v2.18.0
+
+
 Version: 0.10.0
 ~~~~~~~~~~~~~~~
 

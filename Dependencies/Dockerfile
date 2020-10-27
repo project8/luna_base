@@ -1,20 +1,43 @@
-FROM project8/p8compute_bare as gcc-base
+ARG img_user=amd64
+ARG img_repo=centos
+ARG img_tag=8
+
+FROM ${img_user}/${img_repo}:${img_tag} as base-image
+
+
+# Install as many dependencies as possible using dnf
+RUN dnf -y group install --with-optional "Development Tools" &&\
+    yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm &&\
+    export ARCH=$( /bin/arch ) &&\
+    dnf -y install subscription-manager &&\
+    subscription-manager repos --enable "codeready-builder-for-rhel-8-${ARCH}-rpms" &&\
+    dnf config-manager --set-enabled PowerTools &&\
+    dnf -y install \
+        python3-devel \
+        fftw-devel \
+        boost-devel \
+        gsl-devel \
+        hdf5-devel \
+        matio-devel \
+        root \
+        &&\
+    /bin/true
 
 # get gcc from package manager
-RUN yum -y install centos-release-scl-rh &&\
-    yum -y install \
-        devtoolset-7-gcc-c++ \
-        rh-python36-python-devel \
-        zlib-devel \
-        perl-devel \
-        gettext-devel \
-        libX11-devel \
-        libXpm-devel \
-        libXft-devel \
-        libXext-devel \
-        wget
+#RUN yum -y install centos-release-scl-rh &&\
+#    yum -y install \
+#        devtoolset-7-gcc-c++ \
+#        rh-python36-python-devel \
+#        zlib-devel \
+#        perl-devel \
+#        gettext-devel \
+#        libX11-devel \
+#        libXpm-devel \
+#        libXft-devel \
+#        libXext-devel \
+#        wget
 
-ENV COMMON_TAG=v0.9.0
+ENV COMMON_TAG=v1.0.0
 ENV COMMON_BUILD_PREFIX=/usr/local/p8/common/$COMMON_TAG
 
 # Create the setup.sh script
@@ -34,10 +57,7 @@ RUN mkdir -p $COMMON_BUILD_PREFIX &&\
     echo 'export LD_LIBRARY_PATH=$COMMON_BUILD_PREFIX/lib:$LD_LIBRARY_PATH' >> setup.sh &&\
     /bin/true
 
-RUN source scl_source enable devtoolset-7 &&\
-    source scl_source enable rh-python36 &&\
-    unset PYTHONPATH &&\
-    pip3 install --upgrade pip==18.1 &&\
+RUN pip3 install --upgrade pip==18.1 &&\
     pip3 -v install \
         'PyYAML==3.13' \
         'pyparsing==2.1.5' \

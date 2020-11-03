@@ -1,0 +1,22 @@
+name: Build p8compute_dependencies
+
+on:
+  push:
+    branches: [ main, develop, feature/GHActions ]
+    paths:
+      - Dependencies/Dockerfile
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - Dependencies/Dockerfile
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: docker build . --file Dependencies/Dockerfile --tag p8compute_dependencies:test

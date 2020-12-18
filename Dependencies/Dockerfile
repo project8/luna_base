@@ -16,17 +16,20 @@ RUN dnf -y group install --with-optional "Development Tools" &&\
         fftw-devel \
         boost-devel \
         gsl-devel \
-        hdf5-devel \
         matio-devel \
         root \
         librabbitmq-devel \
         yaml-cpp-devel \
         rapidjson-devel \
         pybind11-devel \
+        openssl-devel \
         wget \
         &&\
     dnf clean all &&\
     /bin/true
+
+ENV CMAKE_LIBRARY_PATH=/usr/lib64
+ENV RapidJSON_DIR=/usr/lib64/cmake
 
 # get gcc from package manager
 #RUN yum -y install centos-release-scl-rh &&\
@@ -82,7 +85,10 @@ RUN pip3 install --upgrade pip &&\
         &&\
     /bin/true
 
-RUN dnf -y install openssl-devel
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4-Linux-x86_64.sh &&\
+    chmod u+x /cmake-3.18.4-Linux-x86_64.sh &&\
+    ./cmake-3.18.4-Linux-x86_64.sh --prefix=/usr/local --skip-license &&\
+    /bin/true
 
 ##########################
 FROM base_image as common
@@ -90,15 +96,28 @@ FROM base_image as common
 RUN mkdir -p /tmp_install
 
 ##########################
-FROM common as cmake_done
+#FROM common as cmake_done
 
 ## cmake (install manually because the version in yum is too old, v3.11)
+#RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
+#    cd /tmp_install &&\
+#    wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz &&\
+#    tar -xvzf cmake-3.18.4.tar.gz &&\
+#    cd cmake-3.18.4 &&\
+#    ./configure --prefix=$COMMON_BUILD_PREFIX &&\
+#    make -j3 install &&\
+#    /bin/true
+
+##########################
+FROM common as hdf5_done
+
+## hdf5
 RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
     cd /tmp_install &&\
-    wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz &&\
-    tar -xvzf cmake-3.18.4.tar.gz &&\
-    cd cmake-3.18.4 &&\
-    ./configure --prefix=$COMMON_BUILD_PREFIX &&\
+    wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.7/src/hdf5-1.10.7.tar.gz &&\
+    tar -xvzf hdf5-1.10.7.tar.gz &&\
+    cd hdf5-1.10.7 &&\
+    ./configure --prefix=$COMMON_BUILD_PREFIX --enable-cxx --enable-shared --enable-unsupported --enable-threadsafe &&\
     make -j3 install &&\
     /bin/true
 
@@ -106,9 +125,9 @@ RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
 FROM base_image
 
 #COPY --from=common $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
-COPY --from=cmake_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
+#COPY --from=cmake_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 #COPY --from=git_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
-#COPY --from=hdf5_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
+COPY --from=hdf5_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 #COPY --from=fftw3_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 #COPY --from=matio_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 #COPY --from=boost_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX

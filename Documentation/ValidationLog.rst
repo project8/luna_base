@@ -43,6 +43,18 @@ Fixes:
 Log
 ---
 
+Version: 0.10.2
+~~~~~~~~~~~~~~~
+
+Release Date: February 26, 2021
+'''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
+* New Locust version: v2.2.0
+
+
 Version: 0.10.1
 ~~~~~~~~~~~~~~~
 

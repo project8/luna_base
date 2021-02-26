@@ -7,6 +7,15 @@ Luna v0.10.1
 P8Compute
 ~~~~~~~~~
 
+* Locust_mc: v2.2.0
+
+
+Luna v0.10.1
+------------
+
+P8Compute
+~~~~~~~~~
+
 * Locust_mc: v2.1.2
 * Katydid: v2.18.0
 

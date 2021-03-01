@@ -1,49 +1,41 @@
-ARG img_user=amd64
-ARG img_repo=centos
-ARG img_tag=8
+ARG img_repo=ubuntu
+ARG img_tag=20.04
 
-FROM ${img_user}/${img_repo}:${img_tag} as base_image
+FROM ${img_repo}:${img_tag} as base_image
 
 
 # Install as many dependencies as possible using dnf
-RUN dnf -y group install --with-optional "Development Tools" &&\
-    yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm &&\
-    export ARCH=$( /bin/arch ) &&\
-    dnf -y install subscription-manager &&\
-    dnf config-manager --set-enabled PowerTools &&\
-    dnf -y install \
-        python3-devel \
-        fftw-devel \
-        boost-devel \
-        gsl-devel \
-        matio-devel \
-        root \
-        librabbitmq-devel \
-        yaml-cpp-devel \
-        rapidjson-devel \
-        pybind11-devel \
-        openssl-devel \
+RUN apt-get update &&\
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        build-essential \
+        cmake \
+        python3-dev \
+        pipenv \
+        fftw-dev \
+        libboost-dev \
+        libeigen3-dev \
+        libgsl-dev \
+        libhdf5-dev \
+        liblapack-dev \
+        libmatio-dev \
+        librabbitmq-dev \
+        libyaml-cpp-dev \
+        rapidjson-dev \
+        pybind11-dev \
+        openssl \
         wget \
         &&\
-    dnf clean all &&\
+    apt-get clean &&\
     /bin/true
+
+# ROOT is currently not available in the package manager (latest is in xenial)
+RUN ROOT_TARBALL="root_v6.22.06.Linux-ubuntu20-x86_64-gcc9.3.tar.gz" &&\
+    cd /usr/local &&\
+    wget https://root.cern/download/$ROOT_TARBALL &&\
+    tar -xzf $ROOT_TARBALL
 
 ENV CMAKE_LIBRARY_PATH=/usr/lib64
 ENV RapidJSON_DIR=/usr/lib64/cmake
-
-# get gcc from package manager
-#RUN yum -y install centos-release-scl-rh &&\
-#    yum -y install \
-#        devtoolset-7-gcc-c++ \
-#        rh-python36-python-devel \
-#        zlib-devel \
-#        perl-devel \
-#        gettext-devel \
-#        libX11-devel \
-#        libXpm-devel \
-#        libXft-devel \
-#        libXext-devel \
-#        wget
 
 ENV COMMON_TAG=v1.0.0.beta
 ENV COMMON_BUILD_PREFIX=/usr/local/p8/common/$COMMON_TAG
@@ -60,40 +52,41 @@ RUN mkdir -p $COMMON_BUILD_PREFIX &&\
     echo 'ln -sfT $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX/../current' >> setup.sh &&\
     echo 'export PATH=$COMMON_BUILD_PREFIX/bin:$PATH' >> setup.sh &&\
     echo 'export LD_LIBRARY_PATH=$COMMON_BUILD_PREFIX/lib:$LD_LIBRARY_PATH' >> setup.sh &&\
+    echo 'source /usr/local/root/bin/thisroot.sh' >> setup.sh &&\
     /bin/true
+
+#RUN apt-get update && apt-get install -y 
 
 # Python package installation
 # hash command needed because pip3 moves after the upgrade
 RUN pip3 install --upgrade pip &&\
-    hash -d pip3 &&\
     pip3 install \
-        'PyYAML==3.13' \
-        'pyparsing==2.1.5' \
+        'iminuit' \
+        'numericalunits' \
+        'PyYAML==5.4.1' \
+        'pyparsing==2.4.7' \
         'dnspython==1.12.0' \
         'cycler==0.10.0' \
-        'python-dateutil==2.7.2' \
-        'pystan==2.17.1.0' \
+        'python-dateutil==2.8.1' \
         'numpy>=1.14' \
-        'uproot==2.8.16' \
+        'Cython>=0.22' \
+        'pystan==2.19.1.1' \
+        'uproot4>=4.0.0' \
         'lz4' \
-        'pbr==0.10.8' \
+        'pbr==5.5.1' \
         'six' \
         'colorlog' \
         'h5py' \
         'matplotlib' \
-        'scipy==1.3.0' \
+        'scipy==1.6.1' \
         &&\
     /bin/true
 
-RUN wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4-Linux-x86_64.sh &&\
-    chmod u+x /cmake-3.18.4-Linux-x86_64.sh &&\
-    ./cmake-3.18.4-Linux-x86_64.sh --prefix=/usr/local --skip-license &&\
-    /bin/true
 
 ##########################
-FROM base_image as common
+#FROM base_image as common
 
-RUN mkdir -p /tmp_install
+#RUN mkdir -p /tmp_install
 
 ##########################
 #FROM common as cmake_done
@@ -109,25 +102,25 @@ RUN mkdir -p /tmp_install
 #    /bin/true
 
 ##########################
-FROM common as hdf5_done
+#FROM common as hdf5_done
 
 ## hdf5
-RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
-    cd /tmp_install &&\
-    wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.7/src/hdf5-1.10.7.tar.gz &&\
-    tar -xvzf hdf5-1.10.7.tar.gz &&\
-    cd hdf5-1.10.7 &&\
-    ./configure --prefix=$COMMON_BUILD_PREFIX --enable-cxx --enable-shared --enable-unsupported --enable-threadsafe &&\
-    make -j3 install &&\
-    /bin/true
+#RUN source $COMMON_BUILD_PREFIX/setup.sh &&\
+#    cd /tmp_install &&\
+#    wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.7/src/hdf5-1.10.7.tar.gz &&\
+#    tar -xvzf hdf5-1.10.7.tar.gz &&\
+#    cd hdf5-1.10.7 &&\
+#    ./configure --prefix=$COMMON_BUILD_PREFIX --enable-cxx --enable-shared --enable-unsupported --enable-threadsafe &&\
+#    make -j3 install &&\
+#    /bin/true
 
 ########################
-FROM base_image
+#FROM base_image
 
 #COPY --from=common $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 #COPY --from=cmake_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 #COPY --from=git_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
-COPY --from=hdf5_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
+#COPY --from=hdf5_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 #COPY --from=fftw3_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 #COPY --from=matio_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX
 #COPY --from=boost_done $COMMON_BUILD_PREFIX $COMMON_BUILD_PREFIX

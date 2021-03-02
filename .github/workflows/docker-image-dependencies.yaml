@@ -12,6 +12,8 @@ on:
     paths:
       - Dependencies/Dockerfile
 
+  workflow_dispatch:
+
 jobs:
 
   build:

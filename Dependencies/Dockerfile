@@ -8,12 +8,15 @@ FROM ${img_repo}:${img_tag} as base_image
 RUN apt-get update &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
         build-essential \
+        git \
         cmake \
         python3-dev \
         pipenv \
-        fftw-dev \
-        libboost-dev \
+        #fftw-dev \
+        libfftw3-dev \
+        libboost-all-dev \
         libeigen3-dev \
+        libopenblas-dev \
         libgsl-dev \
         libhdf5-dev \
         liblapack-dev \

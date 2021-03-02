@@ -3,7 +3,7 @@ ARG img_tag=20.04
 
 FROM ${img_repo}:${img_tag} as base_image
 
- 
+
 # Install as many dependencies as possible using dnf
 RUN apt-get update &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -y \

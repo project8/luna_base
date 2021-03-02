@@ -15,8 +15,8 @@ RUN apt-get update &&\
         #fftw-dev \
         libfftw3-dev \
         libboost-all-dev \
-        libeigen3-dev \
         libopenblas-dev \
+        libeigen3-dev \
         libgsl-dev \
         libhdf5-dev \
         liblapack-dev \

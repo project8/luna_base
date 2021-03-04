@@ -8,22 +8,32 @@ FROM ${img_repo}:${img_tag} as base_image
 RUN apt-get update &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
         build-essential \
+        dpkg-dev \
         cmake \
+        git \
+        openssl \
         python3-dev \
         pipenv \
-        fftw-dev \
-        libboost-dev \
-        libeigen3-dev \
+        wget \
         libgsl-dev \
-        libhdf5-dev \
+        libopenblas-dev \
         liblapack-dev \
+        libfreetype-dev \
+        libx11-dev \
+        libxpm-dev \
+        libxft-dev \
+        libxext-dev \
+        libpng-dev \
+        libjpeg-dev \
+        libfftw3-dev \
+        libboost-all-dev \
+        libeigen3-dev \
+        libhdf5-dev \
         libmatio-dev \
         librabbitmq-dev \
         libyaml-cpp-dev \
         rapidjson-dev \
         pybind11-dev \
-        openssl \
-        wget \
         &&\
     apt-get clean &&\
     /bin/true

@@ -18,7 +18,7 @@ jobs:
 
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout the repo   # not needed when using the Git context in build-and-push
@@ -44,7 +44,7 @@ jobs:
           file: Dependencies/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: project8/p8compute_dependencies:test  # todo: how to make this depend on the tag for releases
-          #platforms: ...
+          #platforms: linux/amd65,linux/arm64
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 

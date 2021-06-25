@@ -3,6 +3,7 @@ ARG img_tag=20.04
 
 FROM ${img_repo}:${img_tag} as base_image
 
+SHELL ["/bin/bash", "-c"]
 
 # Install as many dependencies as possible using dnf
 RUN apt-get update &&\

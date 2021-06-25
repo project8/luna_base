@@ -48,7 +48,7 @@ RUN ROOT_TARBALL="root_v6.22.06.Linux-ubuntu20-x86_64-gcc9.3.tar.gz" &&\
 ENV CMAKE_LIBRARY_PATH=/usr/lib64
 ENV RapidJSON_DIR=/usr/lib64/cmake
 
-ENV COMMON_TAG=v1.0.0.beta
+ENV COMMON_TAG=v1.0.0
 ENV COMMON_BUILD_PREFIX=/usr/local/p8/common/$COMMON_TAG
 
 # Create the setup.sh script

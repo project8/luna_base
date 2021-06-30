@@ -23,10 +23,8 @@ jobs:
         id: docker_meta
         uses: docker/metadata-action@v3
         with:
-          images: project8/luna_base
-          tag-sha: false
-          tag-semver: |
-            {{raw}}
+          images: project8/p8compute_dependencies
+          tags: type=semver={{raw}}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -34,8 +32,6 @@ jobs:
         id: setup_buildx
       - name: List platforms
         run: echo ${{ steps.setup_buildx.outputs.platforms }}
-      - name: Print metadata
-        run: echo ${{ steps.docker_meta.outputs }}
       #- name: Build the Docker image
       #  run: docker build . --file Dependencies/Dockerfile --tag p8compute_dependencies:test
       - name: Login to Docker Hub

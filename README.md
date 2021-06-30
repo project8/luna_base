@@ -1,37 +1,59 @@
-# Luna
+# Luna Base
 
-This repo includes the Dockerfiles for the containerization of the Project 8 analysis & simulations software stack. Specifically, it includes:
-* The dependencies of the software stack
-* The `p8compute` container, which brings together the entire stack and is used for official analysis and simulations jobs
+This repo includes the Dockerfile for the base image of the Project 8 analysis & simulations software stack.
 
-Dockerfiles for individual software packages can be found in their respective repositories.  In principle those individual containers can be used independent of the `p8compute` container.
+Dockerfiles for individual software packages can be found in their respective repositories.  They are all based on the `p8compute_dependencies` image.
 
 ## Dependencies
 
-Installed by `yum` (and what requires it):
-* devtoolset-7 (`devtoolset-7-gcc-c++`) (Lots of things)
-* `rh-python36-python-devel` (ROOT, Mermithid, etc)
-* `zlib-devel` (git)
-* `perl-devel` (git)
-* `gettext-devel` (git)
-* `libX11-devel` (ROOT)
-* `libXpm-devel` (ROOT)
-* `libXft-devel` (ROOT)
-* `libXext-devel` (ROOT)
-* `wget` (install)
+Installed by aptitude (and what requires it):
+* build-essential (many things)
+* dpkg-dev (many things)
+* cmake (any dev work)
+* git (any dev work)
+* openssl (AMQP, ROOT, ...)
+* python3-dev (Mermithid, ...)
+* pipenv (anything Python)
+* wget (dev work)
+* libgsl-dev (Kassiopeia)
+* libopenblas-dev (Katydid)
+* liblapack-dev (Katydid)
+* libfreetype-dev (Katydid)
+* libx11-dev (ROOT)
+* libxpm-dev (ROOT)
+* libxft-dev (ROOT)
+* libxext-dev (ROOT)
+* libpng-dev (ROOT)
+* libjpeg-dev (ROOT)
+* libfftw3-dev (Katydid, Locust, ROOT, ...)
+* libboost-all-dev (many things)
+* libeigen3-dev (Katydid)
+* libhdf5-dev (anything Monarch)
+* libmatio-dev (Katydid)
+* librabbitmq-dev (Psyllid, Dripline)
+* libyaml-cpp-dev (many things)
+* rapidjson-dev (many things)
+* pybind11-dev (Dripline)
 
-Installed from source
-* CMake
-* Git
-* HDF5
-* FFTW3
-* Matio
-* GSL
-* ROOT
+Installed by pip:
+* iminuit
+* numericalunits
+* PyYAML==5.4.1
+* pyparsing==2.4.7
+* dnspython==1.12.0
+* cycler==0.10.0
+* python-dateutil==2.8.1
+* numpy>=1.14
+* Cython>=0.22
+* pystan==2.17.1.0
+* uproot4>=4.0.0
+* lz4
+* pbr==5.5.1
+* six
+* colorlog
+* h5py
+* matplotlib
+* scipy==1.6.1
 
-## P8Compute
-
-Packages currently included:
-* Katydid
-* Locust_mc
-
+Installed independently and why:
+* ROOT (binary tarball): version available in aptitude is too old

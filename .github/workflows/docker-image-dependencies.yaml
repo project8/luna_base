@@ -52,7 +52,8 @@ jobs:
             img_repo=ubuntu
             img_tag=20.04
           tags: ${{ steps.docker_meta.outputs.tags }}
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
+#          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          platforms: linux/amd64
       - name: Image digest
         run: >
           echo ${{ steps.build_push.outputs.digest }}

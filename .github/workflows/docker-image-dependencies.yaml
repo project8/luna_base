@@ -2,15 +2,11 @@ name: Build p8compute_dependencies
 
 on:
   push:
-    branches: [ main, develop, feature/GHActions ]
-    tags: 'v*.*.*'
-    #paths:
-    #  - Dependencies/Dockerfile
+    branches: [ main, develop ]
+    tags: ['v*.*.*']
 
   pull_request:
     branches: [ main, develop ]
-    paths:
-      - Dependencies/Dockerfile
 
   workflow_dispatch:
 
@@ -23,12 +19,21 @@ jobs:
     steps:
       - name: Checkout the repo   # not needed when using the Git context in build-and-push
         uses: actions/checkout@v2
+      - name: Docker meta
+        id: docker_meta
+        uses: crazy-max/ghaction-docker-meta@v1
+        with:
+          images: driplineorg/dripline-python
+          tag-sha: false
+          tag-semver: |
+            {{raw}}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-        with:
-          buildkitd-flags: --debug
+        id: setup_buildx
+      - name: List platforms
+        run: echo ${{ steps.setup_buildx.outputs.platforms }}
       #- name: Build the Docker image
       #  run: docker build . --file Dependencies/Dockerfile --tag p8compute_dependencies:test
       - name: Login to Docker Hub
@@ -36,15 +41,18 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Push to Docker Hub
-        id: docker_build
+      - name: Build and push
+        id: build_push
         uses: docker/build-push-action@v2
         with:
           context: Dependencies/
           file: Dependencies/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
-          tags: project8/p8compute_dependencies:test  # todo: how to make this depend on the tag for releases
-          #platforms: linux/amd65,linux/arm64
+          build-args: |
+            img_repo=ubuntu
+            img_tag=20.04
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          platforms: linux/amd64,linux/arm/v7,linux/arm64
       - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
-
+        run: >
+          echo ${{ steps.build_push.outputs.digest }}

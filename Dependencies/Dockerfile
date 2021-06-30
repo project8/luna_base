@@ -5,7 +5,7 @@ FROM ${img_repo}:${img_tag} as base_image
 
 SHELL ["/bin/bash", "-c"]
 
-# Install as many dependencies as possible using dnf
+# Install as many dependencies as possible using apt
 RUN apt-get update &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
         build-essential \
@@ -38,12 +38,6 @@ RUN apt-get update &&\
         &&\
     apt-get clean &&\
     /bin/true
-
-# ROOT is currently not available in the package manager (latest is in xenial)
-RUN ROOT_TARBALL="root_v6.22.06.Linux-ubuntu20-x86_64-gcc9.3.tar.gz" &&\
-    cd /usr/local &&\
-    wget https://root.cern/download/$ROOT_TARBALL &&\
-    tar -xzf $ROOT_TARBALL
 
 ENV CMAKE_LIBRARY_PATH=/usr/lib64
 ENV RapidJSON_DIR=/usr/lib64/cmake
@@ -81,7 +75,7 @@ RUN pip3 install --upgrade pip &&\
         'python-dateutil==2.8.1' \
         'numpy>=1.14' \
         'Cython>=0.22' \
-        'pystan==2.19.1.1' \
+        'pystan==2.17.1.0' \
         'uproot4>=4.0.0' \
         'lz4' \
         'pbr==5.5.1' \
@@ -92,3 +86,9 @@ RUN pip3 install --upgrade pip &&\
         'scipy==1.6.1' \
         &&\
     /bin/true
+
+# ROOT is currently not available in the package manager (latest is in xenial)
+RUN ROOT_TARBALL="root_v6.22.06.Linux-ubuntu20-x86_64-gcc9.3.tar.gz" &&\
+    cd /usr/local &&\
+    wget https://root.cern/download/$ROOT_TARBALL &&\
+    tar -xzf $ROOT_TARBALL

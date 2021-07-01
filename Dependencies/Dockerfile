@@ -12,6 +12,7 @@ RUN apt-get update &&\
         build-essential \
         dpkg-dev \
         cmake \
+        clang \
         git \
         openssl \
         python3-dev \

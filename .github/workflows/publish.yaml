@@ -4,7 +4,7 @@ name: Publish
 on:
 
   push:
-    branches: [ main, develop, feature/improved-workflow]
+    branches: [ main, develop ]
     tags: ['v*.*.*']
     
   pull_request:

@@ -1,6 +1,8 @@
 ARG img_repo=ubuntu
 ARG img_tag=20.04
 
+ARG common_tag=beta
+
 FROM ${img_repo}:${img_tag} as base_image
 
 # Set bash as the default shell
@@ -12,6 +14,7 @@ RUN apt-get update &&\
         build-essential \
         dpkg-dev \
         cmake \
+        clang \
         git \
         openssl \
         python3-dev \
@@ -43,7 +46,8 @@ RUN apt-get update &&\
 ENV CMAKE_LIBRARY_PATH=/usr/lib64
 ENV RapidJSON_DIR=/usr/lib64/cmake
 
-ENV COMMON_TAG=v1.0.0
+#ENV COMMON_TAG=v1.0.0
+ENV COMMON_TAG=${common_tag}
 ENV COMMON_BUILD_PREFIX=/usr/local/p8/common/$COMMON_TAG
 
 # Create the setup.sh script

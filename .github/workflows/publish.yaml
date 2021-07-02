@@ -88,7 +88,8 @@ jobs:
       needs: [publish]
       strategy:
         matrix:
-          repo: ['project8/katydid', 'project8/locust_mc', 'project8/mermithid', 'project8/psyllid']
+          repo: ['project8/psyllid']
+#          repo: ['project8/katydid', 'project8/locust_mc', 'project8/mermithid', 'project8/psyllid']
       steps:
       
         - name: Repository dispatch

@@ -43,6 +43,20 @@ Fixes:
 Log
 ---
 
+Version: 1.0.0
+~~~~~~~~~~~~~~~
+
+Release Date: June 30, 2021
+'''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
+* First version of luna_base, separating the p8compute_dependencies image from the rest of p8compute in luna
+* New OS: Ubuntu 20.04
+* Automatic building via GitHub Actions
+
+
 Version: 0.10.2
 ~~~~~~~~~~~~~~~
 

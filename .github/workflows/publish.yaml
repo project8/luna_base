@@ -18,38 +18,10 @@ on:
 
 jobs:
 
-  init:
-    runs-on: ubuntu-latest
-    outputs:
-      build_type: ${{ steps.setvars.outputs.build_type }}
-      build_tests: ${{ steps.setvars.outputs.build_tests }}
-
-    steps:
-      - name: Cancel previous workflow
-        uses: styfle/cancel-workflow-action@0.4.0
-        with:
-          access_token: ${{ github.token }}
-
-      - name: Set variables
-        id: setvars
-        #Only build the tests in a debug build, tests currently don't build in release mode
-        run: |
-          echo ${{github.base_ref}}
-          echo ${{github.ref}}
-          if [[ "${{github.base_ref}}" == "develop" || "${{github.ref}}" == "refs/heads/develop" ]]; then
-            echo "::set-output name=build_type::DEBUG"
-            echo "::set-output name=build_tests::TRUE"
-            echo Debug build
-          else
-            echo "::set-output name=build_type::RELEASE"
-            echo "::set-output name=build_tests::FALSE"
-          fi
-
   publish:
 
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
-    needs: [init]
     steps:
     
       - name: Check out the repo
@@ -59,12 +31,9 @@ jobs:
           
       - name: Docker meta
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v1
+        uses: docker/metadata-action@v3
         with:
           images: project8/p8compute_dependencies
-          tag-sha: false
-          tag-semver: |
-            {{raw}}
           
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -98,7 +67,7 @@ jobs:
           file: Dependencies/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           build-args: |
-            dependencies_version=${{ env.RELEASE_VERSION }}
+            common_tag=${{ env.RELEASE_VERSION }}
           tags: ${{ steps.docker_meta.outputs.tags }}
 
   notify-packages:

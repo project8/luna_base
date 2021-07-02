@@ -94,8 +94,9 @@ jobs:
         id: build_push
         uses: docker/build-push-action@v2
         with:
-          context: .
-          push: true
+          context: Dependencies/
+          file: Dependencies/Dockerfile
+          push: ${{ github.event_name != 'pull_request' }}
           build-args: |
             dependencies_version=${{ env.RELEASE_VERSION }}
           tags: ${{ steps.docker_meta.outputs.tags }}

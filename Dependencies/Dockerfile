@@ -19,6 +19,7 @@ RUN apt-get update &&\
         openssl \
         python3-dev \
         pipenv \
+        vim \
         wget \
         libgsl-dev \
         libopenblas-dev \
@@ -36,6 +37,7 @@ RUN apt-get update &&\
         libhdf5-dev \
         libmatio-dev \
         librabbitmq-dev \
+        libvtk5.8 \
         libyaml-cpp-dev \
         rapidjson-dev \
         pybind11-dev \

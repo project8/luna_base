@@ -37,7 +37,7 @@ RUN apt-get update &&\
         libhdf5-dev \
         libmatio-dev \
         librabbitmq-dev \
-        libvtk6.3 \
+        libvtk6-dev \
         libyaml-cpp-dev \
         rapidjson-dev \
         pybind11-dev \

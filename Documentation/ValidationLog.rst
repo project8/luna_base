@@ -43,6 +43,18 @@ Fixes:
 Log
 ---
 
+Version: 1.2.0
+~~~~~~~~~~~~~~~
+
+Release Date: Sept 23, 2021
+'''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
+* Added VTK 6 and VIM to the apt-get install
+
+
 Version: 1.0.0
 ~~~~~~~~~~~~~~~
 

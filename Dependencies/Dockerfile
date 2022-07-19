@@ -83,7 +83,6 @@ RUN pip3 install --upgrade pip &&\
         'python-dateutil==2.8.1' \
         'numpy>=1.14' \
         'Cython>=0.22' \
-        'pystan==2.19.1.1' \
         'uproot4>=4.0.0' \
         'lz4' \
         'pbr==5.5.1' \
@@ -94,10 +93,13 @@ RUN pip3 install --upgrade pip &&\
         'scipy==1.6.1' \
         'build' \
         &&\
+    pip3 install -v \
+        'pystan==2.17.1.0' \
+        &&\
     /bin/true
 
 # ROOT is currently not available in the package manager (latest is in xenial)
-RUN ROOT_TARBALL="root_v6.22.06.Linux-ubuntu20-x86_64-gcc9.3.tar.gz" &&\
-    cd /usr/local &&\
-    wget https://root.cern/download/$ROOT_TARBALL &&\
-    tar -xzf $ROOT_TARBALL
+#RUN ROOT_TARBALL="root_v6.22.06.Linux-ubuntu20-x86_64-gcc9.3.tar.gz" &&\
+#    cd /usr/local &&\
+#    wget https://root.cern/download/$ROOT_TARBALL &&\
+#    tar -xzf $ROOT_TARBALL

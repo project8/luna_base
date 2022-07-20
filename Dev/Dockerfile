@@ -21,19 +21,9 @@ ARG scripts_dir=${P8_ROOT}/common/build_scripts
 COPY Scripts ${scripts_dir}
 
 # Install as many dependencies as possible using apt
-# Then do Python package installation
-# Then install other packages not available in apt
-# Create the setup.sh script
-# Finally, remove unnecessary programs
-RUN ${scripts_dir}/install_packages.sh prod &&\
+RUN ${scripts_dir}/install_packages.sh dev &&\
     ${scripts_dir}/install_python_packages.sh &&\
     ${scripts_dir}/install_other_packages.sh &&\
-    apt-get purge -y \
-        wget \
-        pipenv \
-        &&\
     ${scripts_dir}/create_common_setup.sh &&\
     rm -rf ${scripts_dir} &&\
-    /bin/true
-
     /bin/true

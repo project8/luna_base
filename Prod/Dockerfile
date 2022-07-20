@@ -81,5 +81,9 @@ ENV COMMON_BUILD_PREFIX=/usr/local/p8/common/$COMMON_TAG
 
 # Create the setup.sh script
 # Includes a one-time-use-only guard to avoid repeatedly adding to these environment variables.
+# Then do final cleanup
 COPY Scripts/create_common_setup.sh /usr/local/p8/common/create_common_setup.sh
-RUN /usr/local/p8/common/create_common_setup.sh
+RUN /usr/local/p8/common/create_common_setup.sh &&\
+    rm /usr/local/*.tar.gz &&\
+    rm /usr/local/p8/common/create_common_setup.sh &&\
+    /bin/true

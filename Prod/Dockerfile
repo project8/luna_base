@@ -35,5 +35,3 @@ RUN ${scripts_dir}/install_packages.sh prod &&\
     ${scripts_dir}/create_common_setup.sh &&\
     rm -rf ${scripts_dir} &&\
     /bin/true
-
-    /bin/true

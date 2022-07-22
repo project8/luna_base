@@ -107,3 +107,6 @@ elif [[ "$1" = "prod" ]]; then
 else
     exit 1
 fi
+
+apt-get clean
+rm -rf /var/lib/apt/lists/*

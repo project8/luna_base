@@ -16,6 +16,6 @@ ROOT_TARBALL="root_v6.22.06.Linux-ubuntu20-x86_64-gcc9.3.tar.gz"
 cd /usr/local
 
 # Install files and cleanup
-wget https://root.cern/download/$ROOT_TARBALL
+wget -nv https://root.cern/download/$ROOT_TARBALL
 tar -xzf $ROOT_TARBALL
 rm $ROOT_TARBALL

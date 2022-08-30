@@ -48,17 +48,13 @@
 apt-get update
 
 if [[ "$1" = "dev" ]]; then
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         build-essential \
         dpkg-dev \
         cmake \
         clang \
-        git \
         openssl \
-        python3-dev \
-        pipenv \
         vim \
-        wget \
         libgsl-dev \
         libopenblas-dev \
         liblapack-dev \

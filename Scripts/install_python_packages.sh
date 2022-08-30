@@ -38,7 +38,6 @@ pip3 install \
     'python-dateutil==2.8.1' \
     'numpy>=1.14' \
     'Cython>=0.22' \
-    'pystan==2.19.1.1' \
     'uproot4>=4.0.0' \
     'lz4' \
     'pbr==5.5.1' \
@@ -46,4 +45,6 @@ pip3 install \
     'colorlog' \
     'h5py' \
     'matplotlib' \
-    'scipy==1.6.1'
+    'scipy'
+
+#    'pystan==2.19.1.1' \

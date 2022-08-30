@@ -1,5 +1,5 @@
-ARG img_repo=ubuntu
-ARG img_tag=20.04
+ARG img_repo=python
+ARG img_tag=bullseye
 
 ARG common_tag=beta
 

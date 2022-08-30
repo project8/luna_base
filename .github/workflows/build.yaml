@@ -74,7 +74,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           build-args: |
             img_repo=ubuntu
-            img_tag=20.04
+            img_tag=bullseye
             common_tag=${{ env.COMMON_TAG }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           platforms: linux/amd64
@@ -91,8 +91,8 @@ jobs:
     needs: [build-and-publish]
     strategy:
       matrix:
-        repo: ['project8/psyllid']
-#          repo: ['project8/katydid', 'project8/locust_mc', 'project8/mermithid', 'project8/psyllid']
+        repo: ['project8/katydid']
+#          repo: ['project8/katydid', 'project8/locust_mc', 'project8/mermithid']
     steps:
     
       - name: Repository dispatch

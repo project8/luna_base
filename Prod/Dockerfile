@@ -1,5 +1,5 @@
-ARG img_repo=ubuntu
-ARG img_tag=20.04
+ARG img_repo=python
+ARG img_tag=bullseye
 
 ARG common_tag=beta
 
@@ -30,7 +30,6 @@ RUN ${scripts_dir}/install_packages.sh prod &&\
     ${scripts_dir}/install_other_packages.sh &&\
     apt-get purge -y \
         wget \
-        pipenv \
         &&\
     ${scripts_dir}/create_common_setup.sh &&\
     rm -rf ${scripts_dir} &&\

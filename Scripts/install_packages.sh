@@ -77,26 +77,24 @@ if [[ "$1" = "dev" ]]; then
 elif [[ "$1" = "prod" ]]; then
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
         build-essential \
-        python3 \
-        pipenv \
         wget \
-        libgsl23 \
+        libgsl25 \
         libx11-6 \
         libxpm4 \
         libxft2 \
         libxext6 \
         libpng16-16 \
-        libjpeg8 \
+        libjpeg62-turbo \
         libssl1.1 \
         libfftw3-double3 \
-        libboost-date-time1.71.0 \
-        libboost-filesystem1.71.0 \
-        libboost-program-options1.71.0 \
-        libboost-system1.71.0 \
-        libboost-thread1.71.0 \
+        libboost-date-time1.74.0 \
+        libboost-filesystem1.74.0 \
+        libboost-program-options1.74.0 \
+        libboost-system1.74.0 \
+        libboost-thread1.74.0 \
         libeigen3-dev \
         libhdf5-cpp-103 \
-        libmatio9 \
+        libmatio11 \
         libvtk6.3 \
         libyaml-cpp0.6 \
         rapidjson-dev

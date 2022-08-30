@@ -73,7 +73,7 @@ jobs:
           file: ${{ matrix.build }}/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           build-args: |
-            img_repo=ubuntu
+            img_repo=python
             img_tag=bullseye
             common_tag=${{ env.COMMON_TAG }}
           tags: ${{ steps.docker_meta.outputs.tags }}

@@ -1,0 +1,109 @@
+
+name: Build
+
+on:
+  pull_request:
+  push:
+    branches: [main, develop]
+    tags: ['*']
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+
+  build-and-publish:
+
+    name: Build and push the docker images
+
+    strategy:
+      matrix:
+        build: [Dev, Prod]
+        include:
+          - build: Dev
+            tag-suffix: '-dev'
+          - build: Prod
+            tag-suffix: ''
+
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: Check out the repo
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          # Need to avoid a shallow clone (fetch-depth=1) so that the lookup of the tag works
+          fetch-depth: 0
+          
+      - name: Docker meta
+        id: docker_meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository }}
+          flavor: |
+            latest=auto
+            suffix=${{ matrix.tag-suffix }},onlatest=true
+          tags: |
+            type=semver,pattern={{raw}}
+            type=ref,event=branch
+            type=ref,event=pr
+          
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        
+      - name: Set up Docker Buildx
+        id: setup_buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          buildkitd-flags: --debug
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+    
+      - name: Get previous tag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        id: tag_name
+        with:
+          fallback: beta
+
+      - name: Build
+        id: build
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ${{ matrix.build }}/Dockerfile
+          push: ${{ github.event_name == 'push' && contains(github.ref, 'refs/tags/') }}
+          build-args: |
+            img_repo=python
+            img_tag=bullseye
+            common_tag=${{ steps.tag_name.outputs.tag }}
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          platforms: linux/amd64
+          
+
+#  notify-packages:
+#  
+#    if: |
+#        (github.event_name == 'push' && contains(github.ref, 'refs/tags/') ) 
+#        || github.event_name == 'release' 
+#        || github.event_name == 'workflow_dispatch'
+#    name: Trigger new docker images of the P8 software packages
+#    runs-on: ubuntu-latest
+#    needs: [build-and-publish]
+#    strategy:
+#      matrix:
+#        repo: ['project8/katydid']
+##          repo: ['project8/katydid', 'project8/locust_mc', 'project8/mermithid']
+#    steps:
+#    
+#      - name: Repository dispatch
+#        uses: peter-evans/repository-dispatch@v1
+#        with:
+#          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+#          repository: ${{ matrix.repo }}
+#          event-type: release-event

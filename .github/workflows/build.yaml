@@ -63,11 +63,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
     
+      - name: Get previous tag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        id: tag_name
+        with:
+          fallback: beta
+
       - name: Build
         id: build
         uses: docker/build-push-action@v3
-        env:
-          COMMON_TAG: ${GITHUB_REF#refs/*/}
         with:
           context: .
           file: ${{ matrix.build }}/Dockerfile
@@ -75,7 +79,7 @@ jobs:
           build-args: |
             img_repo=python
             img_tag=bullseye
-            common_tag=${{ env.COMMON_TAG }}
+            common_tag=${{ steps.tag_name.outputs.tag }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           platforms: linux/amd64
           

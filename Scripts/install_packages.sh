@@ -37,7 +37,7 @@
 #   - libboost-system: Katydid, Locust
 #   - libboost-thread: Katydid, Locust
 #   - libeigen3-dev: Katydid
-#   - libhdf5(-dev)(-cpp): Anything using Monarch
+#   - libhdf5(-dev)(-cpp): Anything using Monarch -- Dev is needed to install h5py
 #   - libmatio(-dev): Katydid
 #   - libvtk6(-dev): Kassiopeia
 #   - libyaml-cpp(-dev): Katydid, Locust
@@ -94,6 +94,7 @@ elif [[ "$1" = "prod" ]]; then
         libboost-thread1.74.0 \
         libeigen3-dev \
         libhdf5-cpp-103 \
+        libhdf5-dev \
         libmatio11 \
         libvtk6.3 \
         libyaml-cpp0.6 \

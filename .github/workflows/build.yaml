@@ -84,6 +84,10 @@ jobs:
             common_tag=${{ steps.tag_name.outputs.tag }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           platforms: linux/amd64
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: ${{ github.event_name == 'push' && contains(github.ref, 'refs/tags/') }}
           
 
 #  notify-packages:

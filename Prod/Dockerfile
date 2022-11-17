@@ -25,11 +25,13 @@ COPY Scripts ${scripts_dir}
 # Then install other packages not available in apt
 # Create the setup.sh script
 # Finally, remove unnecessary programs
+#   libhdf5-dev is removed because it was previously needed to install h5py, but isn't needed for running
 RUN ${scripts_dir}/install_packages.sh prod &&\
     ${scripts_dir}/install_python_packages.sh &&\
     ${scripts_dir}/install_other_packages.sh &&\
     apt-get purge -y \
         wget \
+        libhdf5-dev \
         &&\
     ${scripts_dir}/create_common_setup.sh &&\
     rm -rf ${scripts_dir} &&\

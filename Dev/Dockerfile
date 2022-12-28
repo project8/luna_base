@@ -1,11 +1,9 @@
 ARG img_repo=python
 ARG img_tag=bullseye
 
-ARG common_tag=beta
-
 FROM ${img_repo}:${img_tag} as base_image
 
-ARG common_tag
+ARG common_tag=beta
 ARG common_subdir=common
 ARG scripts_dir=/tmp_build_scripts
 

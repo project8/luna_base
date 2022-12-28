@@ -2,7 +2,7 @@
 
 This repo includes the Dockerfiles for the base images of the Project 8 analysis & simulations software stack.
 
-The Dev image includes packages that are needed to build the Project 8 software (usually ending in `-dev`).  The Prod image includes non-dev packages that are necessary to run Project 8 software.  The Prod image is about a factor of two smaller than the DEv image when built.
+The Dev image includes packages that are needed to build the Project 8 software (usually ending in `-dev`).  The Prod image includes non-dev packages that are necessary to run Project 8 software.  The Prod image is about a factor of two smaller than the Dev image when built.
 
 These images are based on the `python/bullseye (Debian-based) image.
 

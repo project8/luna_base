@@ -7,6 +7,9 @@ ARG common_tag=beta
 ARG common_subdir=common
 ARG scripts_dir=/tmp_build_scripts
 
+ARG cc_val=gcc
+ARG cxx_val=g++
+
 # Set bash as the default shell
 SHELL ["/bin/bash", "-c"]
 
@@ -17,6 +20,9 @@ ENV RapidJSON_DIR=/usr/lib64/cmake
 ENV P8_ROOT=/usr/local/p8
 ENV COMMON_TAG=${common_tag}
 ENV COMMON_PREFIX=${P8_ROOT}/${common_subdir}/$COMMON_TAG
+
+ENV CC=${cc_val}
+ENV CXX=${cxx_val}
 
 # Copy all build scripts
 COPY Scripts ${scripts_dir}

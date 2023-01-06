@@ -38,7 +38,7 @@ Installed by aptitude for Dev/Prod (and what requires it):
 * libeigen3-dev / libeigen3-dev (Katydid)
 * libhdf5-dev / libhdf5-cpp-103 (anything Monarch)
 * libmatio-dev / libmatio11 (Katydid)
-* libvtk6-dev / libvtk6.3 (Kassiopeia, optional)
+* libvtk9-dev / libvtk9 (Kassiopeia, optional)
 * libyaml-cpp-dev / libyaml-cpp0.6 (many things)
 * rapidjson-dev / rapidjson-dev (many things)
 

@@ -39,7 +39,7 @@
 #   - libeigen3-dev: Katydid
 #   - libhdf5(-dev)(-cpp): Anything using Monarch -- Dev is needed to install h5py
 #   - libmatio(-dev): Katydid
-#   - libvtk6(-dev): Kassiopeia
+#   - libvtk9(-dev): Kassiopeia
 #   - libyaml-cpp(-dev): Katydid, Locust
 #   - rapidjson-dev: Katydid, Locust
 #   - pybind11-dev: Katydid (build only)
@@ -70,7 +70,7 @@ if [[ "$1" = "dev" ]]; then
         libeigen3-dev \
         libhdf5-dev \
         libmatio-dev \
-        libvtk6-dev \
+        libvtk9-dev \
         libyaml-cpp-dev \
         rapidjson-dev \
         pybind11-dev
@@ -96,7 +96,7 @@ elif [[ "$1" = "prod" ]]; then
         libhdf5-cpp-103 \
         libhdf5-dev \
         libmatio11 \
-        libvtk6.3 \
+        libvtk9 \
         libyaml-cpp0.6 \
         rapidjson-dev
 else

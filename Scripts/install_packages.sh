@@ -92,6 +92,7 @@ elif [[ "$1" = "prod" ]]; then
         libboost-program-options1.74.0 \
         libboost-system1.74.0 \
         libboost-thread1.74.0 \
+        libboost-atomic1.74.0 \
         libeigen3-dev \
         libhdf5-cpp-103 \
         libhdf5-dev \

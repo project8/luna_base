@@ -4,7 +4,7 @@ name: Build
 on:
   pull_request:
   push:
-    branches: [main, develop]
+    branches: [main, develop, feature/luna_base_boostfix]
     tags: ['*']
   workflow_dispatch:
 

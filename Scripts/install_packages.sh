@@ -51,10 +51,13 @@ if [[ "$1" = "dev" ]]; then
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         build-essential \
         dpkg-dev \
+        wget \
         cmake \
         clang \
         openssl \
         vim \
+        python3 \
+        pipenv \
         libgsl-dev \
         libopenblas-dev \
         liblapack-dev \

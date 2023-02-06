@@ -1,5 +1,5 @@
-ARG img_repo=python
-ARG img_tag=bullseye
+ARG img_repo=ubuntu
+ARG img_tag=22.04
 
 FROM ${img_repo}:${img_tag} as base_image
 

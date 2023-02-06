@@ -11,7 +11,7 @@
 #
 
 # List files to be downloaded/used
-ROOT_TARBALL="root_v6.22.06.Linux-ubuntu20-x86_64-gcc9.3.tar.gz"
+ROOT_TARBALL="root_v6.26.10.Linux-ubuntu22-x86_64-gcc11.3.tar.gz"
 
 cd /usr/local
 

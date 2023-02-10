@@ -13,6 +13,7 @@
 # Current dependencies installed
 #   - build-essential: anything to be built; standard libraries
 #   - dpkg-dev: ???
+#   - python3.10-minimal: anything using Python
 #   - cmake: anything to be built
 #   - clang: anything to be built with clang
 #   - git: any p8 projects to be built
@@ -31,6 +32,7 @@
 #   - libpng(-dev): ROOT
 #   - libjpeg(-dev): ROOT
 #   - libfftw3(-dev): ROOT, Katydid, Locust
+#   - libboost-atomic: Katydid, Locust
 #   - libboost-date-time: Katydid, Locust
 #   - libboost-filesystem: Katydid, Locust
 #   - libboost-program-options: Katydid

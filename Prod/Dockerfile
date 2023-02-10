@@ -1,5 +1,5 @@
-ARG img_repo=python
-ARG img_tag=bullseye
+ARG img_repo=ubuntu
+ARG img_tag=22.04
 
 FROM ${img_repo}:${img_tag} as base_image
 
@@ -38,6 +38,7 @@ RUN ${scripts_dir}/install_packages.sh prod &&\
     ${scripts_dir}/install_other_packages.sh &&\
     apt-get purge -y \
         wget \
+        pipenv \
         libhdf5-dev \
         &&\
     ${scripts_dir}/create_common_setup.sh &&\

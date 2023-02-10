@@ -4,7 +4,7 @@ This repo includes the Dockerfiles for the base images of the Project 8 analysis
 
 The Dev image includes packages that are needed to build the Project 8 software (usually ending in `-dev`).  The Prod image includes non-dev packages that are necessary to run Project 8 software.  The Prod image is about a factor of two smaller than the Dev image when built.
 
-These images are based on the `python/bullseye (Debian-based) image.
+These images are based on the Ubuntu 22.04 image.
 
 Dockerfiles for individual software packages can be found in their respective repositories.  They are all based on the `luna_base` image.
 
@@ -13,6 +13,7 @@ Dockerfiles for individual software packages can be found in their respective re
 Installed by aptitude for Dev/Prod (and what requires it):
 * build-essential / build-essential (many things)
 * dpkg-dev / [none] (many things)
+* python3 / python3.10-minimal (many things)
 * cmake / [none] (any dev work)
 * git / [none] (any dev work)
 * vim / [none] (any dev work)
@@ -30,6 +31,7 @@ Installed by aptitude for Dev/Prod (and what requires it):
 * libjpeg-dev / libjpeg62-turbo (ROOT)
 * libfftw3-dev / libfftw3-double3 (Katydid, Locust, ROOT, ...)
 * libboost-all-dev / [none] (many things)
+* [none] / libboost-atomic1.74.0 (many things)
 * [none] / libboost-date-time1.74.0 (many things)
 * [none] / libboost-filesystem1.74.0 (many things)
 * [none] / libboost-program-options1.74.0 (Katydid)

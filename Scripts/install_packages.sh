@@ -13,6 +13,7 @@
 # Current dependencies installed
 #   - build-essential: anything to be built; standard libraries
 #   - dpkg-dev: ???
+#   - python3.10-minimal: anything using Python
 #   - cmake: anything to be built
 #   - clang: anything to be built with clang
 #   - git: any p8 projects to be built
@@ -31,6 +32,7 @@
 #   - libpng(-dev): ROOT
 #   - libjpeg(-dev): ROOT
 #   - libfftw3(-dev): ROOT, Katydid, Locust
+#   - libboost-atomic: Katydid, Locust
 #   - libboost-date-time: Katydid, Locust
 #   - libboost-filesystem: Katydid, Locust
 #   - libboost-program-options: Katydid
@@ -51,10 +53,13 @@ if [[ "$1" = "dev" ]]; then
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         build-essential \
         dpkg-dev \
+        wget \
         cmake \
         clang \
         openssl \
         vim \
+        python3 \
+        pipenv \
         libgsl-dev \
         libopenblas-dev \
         liblapack-dev \
@@ -75,29 +80,32 @@ if [[ "$1" = "dev" ]]; then
         rapidjson-dev \
         pybind11-dev
 elif [[ "$1" = "prod" ]]; then
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         build-essential \
         wget \
-        libgsl25 \
+        python3.10-minimal \
+        pipenv \
+        libgsl27 \
         libx11-6 \
         libxpm4 \
         libxft2 \
         libxext6 \
         libpng16-16 \
-        libjpeg62-turbo \
-        libssl1.1 \
+        libjpeg9 \
+        libssl3 \
         libfftw3-double3 \
         libboost-date-time1.74.0 \
         libboost-filesystem1.74.0 \
         libboost-program-options1.74.0 \
         libboost-system1.74.0 \
         libboost-thread1.74.0 \
+        libboost-atomic1.74.0 \
         libeigen3-dev \
         libhdf5-cpp-103 \
         libhdf5-dev \
         libmatio11 \
-        libvtk9 \
-        libyaml-cpp0.6 \
+        libvtk9.1 \
+        libyaml-cpp0.7 \
         rapidjson-dev
 else
     exit 1

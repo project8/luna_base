@@ -43,6 +43,19 @@ Fixes:
 Log
 ---
 
+Version: 1.3.3
+~~~~~~~~~~~~~~~
+
+Release Date: Feb 23, 2023
+'''''''''''''''''''''''''''''''
+
+New Features:
+'''''''''''''
+
+* Ubuntu base image
+* Dev/Prod split (v1.3.0)
+
+
 Version: 1.2.0
 ~~~~~~~~~~~~~~~
 

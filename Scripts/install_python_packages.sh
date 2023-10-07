@@ -31,7 +31,7 @@ pip3 install --upgrade pip
 pip3 install \
     'iminuit' \
     'numericalunits' \
-    'PyYAML==5.4.1' \
+    'PyYAML==6.0.1' \
     'pyparsing==2.4.7' \
     'dnspython==1.12.0' \
     'cycler==0.10.0' \

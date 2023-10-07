@@ -86,6 +86,7 @@ elif [[ "$1" = "prod" ]]; then
         python3.10-minimal \
         pipenv \
         libgsl27 \
+        libopenblas0 \
         libx11-6 \
         libxpm4 \
         libxft2 \

@@ -67,6 +67,7 @@ if [[ "$1" = "dev" ]]; then
         liblapack-dev \
         libfreetype-dev \
         python3 \
+        pipenv \
         libssl-dev \
         libfftw3-dev \
         libpng-dev \
@@ -79,7 +80,6 @@ if [[ "$1" = "dev" ]]; then
 
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         vim \
-        pipenv \
         libboost-all-dev \
         libeigen3-dev \
         libhdf5-dev \

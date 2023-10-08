@@ -39,7 +39,7 @@ else
 
     # ROOT requires numpy
     pip3 install --upgrade pip
-    pip3 install numpy=1.14
+    pip3 install 'numpy>=1.14'
 
     ROOT_TARBALL="${ROOT_TAG}.source.tar.gz"
     ROOT_SOURCE=/tmp_source

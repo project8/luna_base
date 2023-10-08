@@ -23,9 +23,9 @@
 #   - vim: convenience utility
 #   - wget: downloading files (e.g. tarballs to install)
 #   - libgsl(-dev): ROOT, Kassiopeia
-#   - libopenblas(-dev): ???
-#   - liblapack(-dev): ???
-#   - libfreetype(-dev): ???
+#   - libopenblas(-dev): ROOT
+#   - liblapack(-dev): ROOT
+#   - libfreetype(-dev): ROOT
 #   - libx11(-dev): ROOT
 #   - libxpm(-dev): ROOT
 #   - libxft(-dev): ROOT
@@ -55,6 +55,7 @@ if [[ "$1" = "dev" ]]; then
         dpkg-dev \
         openssl \
         wget \
+        git \
         cmake \
         clang \
         libgsl-dev \
@@ -62,6 +63,9 @@ if [[ "$1" = "dev" ]]; then
         libxpm-dev \
         libxft-dev \
         libxext-dev \
+        libopenblas-dev \
+        liblapack-dev \
+        libfreetype-dev \
         python3 \
         libssl-dev \
         libfftw3-dev \
@@ -76,9 +80,6 @@ if [[ "$1" = "dev" ]]; then
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         vim \
         pipenv \
-        libopenblas-dev \
-        liblapack-dev \
-        libfreetype-dev \
         libboost-all-dev \
         libeigen3-dev \
         libhdf5-dev \

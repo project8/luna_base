@@ -37,6 +37,10 @@ if [[ "$TARGETARCH" = "amd64" ]]; then
 else
     echo "Installing from source"
 
+    # ROOT requires numpy
+    pip3 install --upgrade pip
+    pip3 install numpy=1.14
+
     ROOT_TARBALL="${ROOT_TAG}.source.tar.gz"
     ROOT_SOURCE=/tmp_source
     ROOT_INSTALL=/usr/local/root

@@ -22,7 +22,7 @@ NARG=$3
 if [[ "$TARGETARCH" = "amd64" ]]; then
     echo "Installing pre-built binary"
 
-    ROOT_TARBALL="${ROOT_TAG}.Linux-ubuntu22-x86_64-gcc11.3.tar.gz"
+    ROOT_TARBALL="${ROOT_TAG}.Linux-ubuntu22-x86_64-gcc11.4.tar.gz"
 
     cd /usr/local
 

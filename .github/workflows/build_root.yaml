@@ -82,4 +82,5 @@ jobs:
             root_tag=${{ env.ROOT_TAG }}
             narg=${{ env.NARG }}
           tags: ${{ env.REGISTRY }}/project8/luna_base_root:${{ env.ROOT_TAG }}
-          platforms: ${{ matrix.push && 'linux/amd64,linux/arm64' || 'linux/amd64' }}
+          platforms: linux/arm64
+#          platforms: ${{ matrix.push && 'linux/amd64,linux/arm64' || 'linux/amd64' }}

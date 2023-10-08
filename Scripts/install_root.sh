@@ -49,9 +49,10 @@ else
     # Build
     wget -nv --no-check-certificate https://root.cern/download/$ROOT_TARBALL
     tar -xzf $ROOT_TARBALL
-    cd $ROOT_TAG
-    mkdir root_build
-    cd root_build
+    # Tags have the format root_vX.Y.Z, and the directories that are in the tarballs have the format root-X.Y.Z
+    ROOT_DIR=`echo "$ROOT_TAG" | sed -r 's/[_v]+/-/g'`
+    mkdir ${ROOT_DIR}/root_build
+    cd ${ROOT_DIR}/root_build
     cmake -DCMAKE_INSTALL_PREFIX=$ROOT_INSTALL ..
     cmake --build . -- install -j$NARG
 

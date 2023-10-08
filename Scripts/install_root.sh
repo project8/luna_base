@@ -27,7 +27,9 @@ if [[ "$TARGETARCH" = "amd64" ]]; then
     cd /usr/local
 
     # Install files and cleanup
-    wget -nv https://root.cern/download/$ROOT_TARBALL
+    URL="https://root.cern/download/$ROOT_TARBALL"
+    echo "getting this file: $URL"
+    wget -nv $URL #https://root.cern/download/$ROOT_TARBALL
     tar -xzf $ROOT_TARBALL
 
     # Cleanup

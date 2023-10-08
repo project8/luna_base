@@ -47,6 +47,8 @@
 #   - pybind11-dev: Katydid (build only)
 #
 
+apt-get update
+
 if [[ "$1" = "dev" ]]; then
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         build-essential \

@@ -23,7 +23,8 @@ jobs:
       matrix:
         build: [Dev]
         include:
-          - push: ${{ github.event_name == 'push' && contains(github.ref, 'refs/tags/') }}
+          - push: true
+#          - push: ${{ github.event_name == 'push' && contains(github.ref, 'refs/tags/') }}
           - build: Dev
             tag-suffix: '-dev'
           - build: Prod
@@ -74,7 +75,8 @@ jobs:
         with:
           context: .
           file: Root/Dockerfile
-          push: ${{ matrix.push }}
+#          push: ${{ matrix.push }}
+          push: false
           build-args: |
             img_repo=${{ env.BASE_REPO }}
             img_tag=${{ env.BASE_TAG }}

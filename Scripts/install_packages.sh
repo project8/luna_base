@@ -48,7 +48,8 @@
 #
 
 apt-get update
-
+dpkg-dev cmake g++ gcc binutils libx11-dev libxpm-dev \
+libxft-dev libxext-dev python libssl-dev
 if [[ "$1" = "dev" ]]; then
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         build-essential \
@@ -56,21 +57,29 @@ if [[ "$1" = "dev" ]]; then
         wget \
         cmake \
         clang \
-        openssl \
-        vim \
-        python3 \
-        pipenv \
         libgsl-dev \
-        libopenblas-dev \
-        liblapack-dev \
-        libfreetype-dev \
         libx11-dev \
         libxpm-dev \
         libxft-dev \
         libxext-dev \
-        libpng-dev \
-        libjpeg-dev \
+        python3 \
+        libssl-dev \
         libfftw3-dev \
+        libpng-dev \
+        libjpeg-dev 
+
+    if [[ "$2" = "root" ]]; then
+        echo "Exiting after only ROOT dependencies installed"
+        exit 0
+    fi
+
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        openssl \
+        vim \
+        pipenv \
+        libopenblas-dev \
+        liblapack-dev \
+        libfreetype-dev \
         libboost-all-dev \
         libeigen3-dev \
         libhdf5-dev \

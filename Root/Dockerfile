@@ -24,11 +24,7 @@ COPY Scripts ${scripts_dir}
 
 # Install as many dependencies as possible using apt
 RUN ${scripts_dir}/install_packages.sh dev root &&\
-#    ${scripts_dir}/install_root.sh &&\
-#    rm -rf ${scripts_dir} &&\
-    /bin/true
-
-RUN ${scripts_dir}/install_root.sh $root_tag $TARGETARCH $narg &&\
+    ${scripts_dir}/install_root.sh $root_tag $TARGETARCH $narg &&\
     rm -rf ${scripts_dir} &&\
     /bin/true
 

@@ -47,9 +47,6 @@
 #   - pybind11-dev: Katydid (build only)
 #
 
-apt-get update
-dpkg-dev cmake g++ gcc binutils libx11-dev libxpm-dev \
-libxft-dev libxext-dev python libssl-dev
 if [[ "$1" = "dev" ]]; then
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         build-essential \

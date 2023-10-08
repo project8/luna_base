@@ -1,4 +1,5 @@
 #! /bin/bash
+set -e  # exit on error
 
 #
 # This script installs the other (non-python, outside of apt) packages.
@@ -13,15 +14,14 @@
 ROOT_TAG=$1
 echo "Installing ROOT: $ROOT_TAG"
 
-NARG=$2
-
+TARGETARCH=$2
 echo "Target arch: $TARGETARCH"
 
+NARG=$3
+
 if [[ "$TARGETARCH" = "amd64" ]]; then
-    echo "Target arch: $TARGETARCH"
-    echo "WRONG IF BLOCK"
-    exit 1
-    # List files to be downloaded/used
+    echo "Installing pre-built binary"
+
     ROOT_TARBALL="${ROOT_TAG}.Linux-ubuntu22-x86_64-gcc11.3.tar.gz"
 
     cd /usr/local
@@ -30,9 +30,11 @@ if [[ "$TARGETARCH" = "amd64" ]]; then
     wget -nv https://root.cern/download/$ROOT_TARBALL
     tar -xzf $ROOT_TARBALL
 
+    # Cleanup
     rm $ROOT_TARBALL
 else
-    # Source file download
+    echo "Installing from source"
+
     ROOT_TARBALL="${ROOT_TAG}.source.tar.gz"
     ROOT_SOURCE=/tmp_source
     ROOT_INSTALL=/usr/local/root
@@ -51,6 +53,7 @@ else
     cmake -DCMAKE_INSTALL_PREFIX=$ROOT_INSTALL ..
     cmake --build . -- install -j$NARG
 
+    # Cleanup
     cd /
     rm $ROOT_TARBALL
     rm -r $ROOT_SOURCE

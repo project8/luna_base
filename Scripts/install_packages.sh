@@ -54,6 +54,7 @@ if [[ "$1" = "dev" ]]; then
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         build-essential \
         dpkg-dev \
+        openssl \
         wget \
         cmake \
         clang \
@@ -74,7 +75,6 @@ if [[ "$1" = "dev" ]]; then
     fi
 
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        openssl \
         vim \
         pipenv \
         libopenblas-dev \

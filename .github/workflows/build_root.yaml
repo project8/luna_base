@@ -2,6 +2,7 @@
 name: Build ROOT
 
 on:
+  pull_request:
   push:
     tags: ['root_v*']
   workflow_dispatch:

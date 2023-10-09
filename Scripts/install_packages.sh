@@ -23,9 +23,9 @@
 #   - vim: convenience utility
 #   - wget: downloading files (e.g. tarballs to install)
 #   - libgsl(-dev): ROOT, Kassiopeia
-#   - libopenblas(-dev): ???
-#   - liblapack(-dev): ???
-#   - libfreetype(-dev): ???
+#   - libopenblas(-dev): ROOT
+#   - liblapack(-dev): ROOT
+#   - libfreetype(-dev): ROOT
 #   - libx11(-dev): ROOT
 #   - libxpm(-dev): ROOT
 #   - libxft(-dev): ROOT
@@ -53,24 +53,33 @@ if [[ "$1" = "dev" ]]; then
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         build-essential \
         dpkg-dev \
+        openssl \
         wget \
+        git \
         cmake \
         clang \
-        openssl \
-        vim \
-        python3 \
-        pipenv \
         libgsl-dev \
-        libopenblas-dev \
-        liblapack-dev \
-        libfreetype-dev \
         libx11-dev \
         libxpm-dev \
         libxft-dev \
         libxext-dev \
-        libpng-dev \
-        libjpeg-dev \
+        libopenblas-dev \
+        liblapack-dev \
+        libfreetype-dev \
+        python3 \
+        pipenv \
+        libssl-dev \
         libfftw3-dev \
+        libpng-dev \
+        libjpeg-dev 
+
+    if [[ "$2" = "root" ]]; then
+        echo "Exiting after only ROOT dependencies installed"
+        exit 0
+    fi
+
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        vim \
         libboost-all-dev \
         libeigen3-dev \
         libhdf5-dev \

@@ -1,19 +1,18 @@
 
-name: Build
+name: Build ROOT
 
 on:
-#  pull_request:
+  pull_request:
   push:
-    branches: [main, develop]
-    tags: ['v*']
+    tags: ['root_v*']
   workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
   BASE_REPO: ubuntu
   BASE_TAG: "22.04"
-  ROOT_REPO: project8/luna_base_root
   ROOT_TAG: "root_v6.28.06"
+  NARG: 2
 
 jobs:
 
@@ -23,13 +22,12 @@ jobs:
 
     strategy:
       matrix:
-        build: [Dev, Prod]
+        build: [Dev]
         include:
-          - push: ${{ github.event_name == 'push' && contains(github.ref, 'refs/tags/') }}
+          - push: true
+#          - push: ${{ github.event_name == 'push' && contains(github.ref, 'refs/tags/') }}
           - build: Dev
             tag-suffix: '-dev'
-          - build: Prod
-            tag-suffix: ''
 
     runs-on: ubuntu-latest
     steps:
@@ -70,51 +68,19 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
     
-      - name: Get previous tag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
-        id: tag_name
-        with:
-          fallback: beta
-
       - name: Build
         id: build
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ${{ matrix.build }}/Dockerfile
-          push: ${{ matrix.push }}
+          file: Root/Dockerfile
+#          push: ${{ matrix.push }}
+          push: false
           build-args: |
             img_repo=${{ env.BASE_REPO }}
             img_tag=${{ env.BASE_TAG }}
-            root_repo=${{ env.REGISTRY }}/${{ env.ROOT_REPO }}
             root_tag=${{ env.ROOT_TAG }}
-            common_tag=${{ steps.tag_name.outputs.tag }}
-          tags: ${{ steps.docker_meta.outputs.tags }}
-          platforms: ${{ matrix.push && 'linux/amd64,linux/arm64' || 'linux/amd64' }}
-
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: ${{ matrix.push }}
-          
-
-#  notify-packages:
-#  
-#    if: |
-#        (github.event_name == 'push' && contains(github.ref, 'refs/tags/') ) 
-#        || github.event_name == 'release' 
-#        || github.event_name == 'workflow_dispatch'
-#    name: Trigger new docker images of the P8 software packages
-#    runs-on: ubuntu-latest
-#    needs: [build-and-publish]
-#    strategy:
-#      matrix:
-#        repo: ['project8/katydid']
-##          repo: ['project8/katydid', 'project8/locust_mc', 'project8/mermithid']
-#    steps:
-#    
-#      - name: Repository dispatch
-#        uses: peter-evans/repository-dispatch@v1
-#        with:
-#          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-#          repository: ${{ matrix.repo }}
-#          event-type: release-event
+            narg=${{ env.NARG }}
+          tags: ${{ env.REGISTRY }}/project8/luna_base_root:${{ env.ROOT_TAG }}
+          platforms: linux/arm64
+#          platforms: ${{ matrix.push && 'linux/amd64,linux/arm64' || 'linux/amd64' }}

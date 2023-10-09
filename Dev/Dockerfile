@@ -1,6 +1,11 @@
 ARG img_repo=ubuntu
 ARG img_tag=22.04
 
+ARG root_repo=ghcr.io/project8/luna_base_root
+ARG root_tag=root_v6.28.06
+
+FROM ${root_repo}:${root_tag} as root_image
+
 FROM ${img_repo}:${img_tag} as base_image
 
 ARG common_tag=beta
@@ -30,7 +35,9 @@ COPY Scripts ${scripts_dir}
 # Install as many dependencies as possible using apt
 RUN ${scripts_dir}/install_packages.sh dev &&\
     ${scripts_dir}/install_python_packages.sh &&\
-    ${scripts_dir}/install_other_packages.sh &&\
+#    ${scripts_dir}/install_other_packages.sh &&\
     ${scripts_dir}/create_common_setup.sh &&\
     rm -rf ${scripts_dir} &&\
     /bin/true
+
+COPY --from=root_image /usr/local/root /usr/local/root

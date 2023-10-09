@@ -12,6 +12,8 @@ env:
   REGISTRY: ghcr.io
   BASE_REPO: ubuntu
   BASE_TAG: "22.04"
+  ROOT_REPO: project8/luna_base_root
+  ROOT_TAG: "root_v6.28.06"
 
 jobs:
 
@@ -84,6 +86,8 @@ jobs:
           build-args: |
             img_repo=${{ env.BASE_REPO }}
             img_tag=${{ env.BASE_TAG }}
+            root_repo=${{ env.REGISTRY }}/${{ env.ROOT_REPO }}
+            root_tag=${{ env.ROOT_TAG }}
             common_tag=${{ steps.tag_name.outputs.tag }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           platforms: ${{ matrix.push && 'linux/amd64,linux/arm64' || 'linux/amd64' }}

@@ -35,7 +35,7 @@ COPY Scripts ${scripts_dir}
 #   libhdf5-dev is removed because it was previously needed to install h5py, but isn't needed for running
 RUN ${scripts_dir}/install_packages.sh prod &&\
     ${scripts_dir}/install_python_packages.sh &&\
-    ${scripts_dir}/install_other_packages.sh &&\
+#    ${scripts_dir}/install_other_packages.sh &&\
     apt-get purge -y \
         wget \
         pipenv \
@@ -44,3 +44,5 @@ RUN ${scripts_dir}/install_packages.sh prod &&\
     ${scripts_dir}/create_common_setup.sh &&\
     rm -rf ${scripts_dir} &&\
     /bin/true
+
+COPY --from=root_image /usr/local/root /usr/local/root

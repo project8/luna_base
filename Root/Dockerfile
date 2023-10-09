@@ -3,7 +3,10 @@ ARG img_tag=22.04
 
 FROM ${img_repo}:${img_tag} as base_image
 
+# TARGETARCH should get set automatically
 ARG TARGETARCH
+
+# These need to be filled in
 ARG root_tag
 ARG narg=2
 
